@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config version="1.0">
+  <title>Hello JAXB!</title>
+  <message>JAXB - XML the way it was meant to be!</message>
+  <width>640</width>
+  <height>480</height>
+  <bg>ff00ff</bg>
+  <url name="Processing">http://processing.org</url>
+  <url name="JAXB">http://jaxb.java.net</url>
+  <url name="PostSpectacular">http://pspctclr.com</url>
+</config>
