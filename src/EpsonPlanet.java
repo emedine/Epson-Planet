@@ -312,7 +312,7 @@ public class EpsonPlanet extends PApplet {
 		}
 		
 		/// let's do some xml
-		initXML();
+		// initXML();
 		
 		
 		//// this does locations from our original DB
