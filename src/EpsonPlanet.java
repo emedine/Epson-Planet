@@ -55,25 +55,11 @@ import toxi.geom.mesh.SurfaceMeshBuilder;
 import toxi.processing.ToxiclibsSupport;
 
 //twitter libraries
-import twitter4j.Status;
-//import twitter4j.StatusAdapter;
-import twitter4j.GeoLocation;
-import twitter4j.IDs;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.StatusListener;
-import twitter4j.Twitter;
-//import twitter4j.TwitterException;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
-import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
-import twitter4j.FilterQuery;
-import twitter4j.Paging;
-import twitter4j.User;
+
 //java libraries
 
-
+///// video imports
+import processing.video.*;
 /*
  * <ul>
  * <li>Move mouse to rotate view</li>
@@ -154,18 +140,6 @@ public class EpsonPlanet extends PApplet {
 	JSONArray sentimentArray;
 	JSONObject sentimentData;
 
-	// Oauth info
-	String OAuthConsumerKey = "4M5tIp8YTjua1fPgwXzbfw";
-	String OAuthConsumerSecret = "GBHtClbEhdT72AcgUguRIDvmXKA6jxYlzasaTM9Hl8";
-	// Access Token info
-	static String AccessToken = "633343317-hrcN0DAfVTvIFcAhc6EduWN9lFkSEThXQ422RUsd";
-	static String AccessTokenSecret = "doJ1GeGVpc6XUR10xoI8gXn4PdFrAAg8yN8JSBO17M";
-	//
-
-	String thePath = "http://api.twitter.com/1/users/show.json?user_id=";
-	// if you enter keywords here it will filter, otherwise it will sample
-	/// used barak obama because it returns a lot of results right away
-	String keywords[] = { "zombies", "werewolves", "mermen"};
 	
 	// array lists for users and re-tweeters
 	ArrayList<GPSMarker> GPSArray = new ArrayList();
@@ -175,9 +149,6 @@ public class EpsonPlanet extends PApplet {
 	/// marker object
 	GPSMarker theMarker;
 	
-	// Twitter objects
-	TwitterStream twitter = new TwitterStreamFactory().getInstance();
-	Twitter twitterF = new TwitterFactory().getInstance();
 	
 	// TEXT POSITIONING
 	int curDataX = 100;
@@ -240,9 +211,11 @@ public class EpsonPlanet extends PApplet {
 	DataProfile dataProfile;
 	
 	
-	/// cert objects
-	String certPath = "http://www.ericmedine.com/temps/certs/TwitterPlanet.txt";
-	boolean hasCert = false;
+	//// VIDEO OBJECTS
+	Movie myMovie;
+	boolean isVideoPlaying = false;
+	String videoPaths[] = {"../video/particle_fire_loop.mov","../video/station.mov","../video/particle_fire_loop.mov"};
+	int videoCounter = 0;
 	
 	
 	/*
@@ -261,6 +234,8 @@ public class EpsonPlanet extends PApplet {
 	*/
 
 	public void setup() {
+		// size(1024, 768);
+		/// size(1024, 768, P2D);
 		size(1024, 768, OPENGL);
 		// size(1440, 900, OPENGL);
 		// size(screenWidth, screenHeight, OPENGL); /// have to hard code it if running a standalone
@@ -302,22 +277,19 @@ public class EpsonPlanet extends PApplet {
 		/// location array with lat and lon values
 		initLocations();
 		
-		//// let's do some twitter!
-		connectTwitter();
-		twitter.addListener(listener);
-		if (keywords.length == 0) {
-			twitter.sample();
-		} else {
-			twitter.filter(new FilterQuery().track(keywords));
-		}
+	
 		
 		/// let's do some xml
 		// initXML();
 		
+		/// lets do some video
+		///*
+		// myMovie = new Movie(this, "../video/station.mov");
+		// myMovie.loop();
+		//*/
 		
 		//// this does locations from our original DB
 		// initLocations();
-		checkCert();
 	}
 	
 	public void draw() {
@@ -325,35 +297,47 @@ public class EpsonPlanet extends PApplet {
 		
 		
 		background(bgColorR, bgColorG, bgColorB);
+		
+		/*
+		 if (myMovie.available()) {
+			    myMovie.read();
+		  }
+		 
+		image(myMovie, 0, 0);
+		
+		*/
 
 		renderGlobe();
-
-		showError();
-
-	}
-	
-	private void checkCert(){
-		try{
-			String lines[] = loadStrings(certPath);
-			String tWord ="";
-			for (int i = 0 ; i < lines.length; i++) {
-			  println(lines[i]);
-			  tWord = lines[i];
-			   
-			}
-			if(tWord.equals("Verification Complete")){
-				hasCert = true;
-				println("CERT: " + tWord);
-			} else {
-				// hasCert = false;
-				println("NO VERIFICATION");
-			}
-		} catch (Exception e){
-			println("NO VERIFICATION");
-			
-		}
 		
+		if(isVideoPlaying){
+			  image(myMovie, 0, 0); 
+		  }
+
+
+
 	}
+	////// VIDEO FUNCTIONS ////////////////
+	public void switchVideo(){
+		
+		/// change the path of the video
+		initVideo();
+	}
+	public void initVideo(){
+		isVideoPlaying = true;
+		
+		 myMovie = new Movie(this, videoPaths[videoCounter]);
+		 // theMov.play();  //plays the movie once
+		 myMovie.loop();  //plays the movie over and over
+	}
+
+	// Called every time a new frame is available to read
+	// /*
+	public void movieEvent(Movie m) {
+		println("Reading");
+	    m.read();
+	}
+	// */
+	
 	private void initXML(){
 		/// if not, parse the xml file
 		// to the nested object hierarchy defined in the AppConfig class (see below)
@@ -382,17 +366,7 @@ public class EpsonPlanet extends PApplet {
 				
 		
 	}
-	private void showError(){
-		if(hasCert == false){
-		    rect(0, 0, screenWidth, screenHeight);
-		    fill(255);
-		    textFont(HeaderFont);
-		    text("The certificate for this software has expired.", screenWidth/3, screenHeight/3, screenWidth, screenHeight);
-		    
-		   		
-		}
-		
-	}
+	
 	
 	/////////////////////////
 	///// load keywords
@@ -403,7 +377,7 @@ public class EpsonPlanet extends PApplet {
 		for (int i = 0 ; i < lines.length; i++) {
 		  println(lines[i]);
 		  String tWord = lines[i];
-		  keywords[i] = tWord;
+		  // keywords[i] = tWord;
 		}
 	}
 	
@@ -473,242 +447,7 @@ public class EpsonPlanet extends PApplet {
 			}
 		}
 
-	
-	//////////////////////////////
-	////// TWITTER STREAM ///////////
-	///////////////////////////////
-	// INITIALIZE CONNECTION
-		void connectTwitter() {
-			/// stream
-			twitter.setOAuthConsumer(OAuthConsumerKey, OAuthConsumerSecret);
-			AccessToken accessToken = loadAccessToken();
-			twitter.setOAuthAccessToken(accessToken);
-			/// factory
-			twitterF.setOAuthConsumer(OAuthConsumerKey, OAuthConsumerSecret);
-			twitterF.setOAuthAccessToken(accessToken);
-		}
 
-		// Loading up the access token
-		private static AccessToken loadAccessToken() {
-			return new AccessToken(AccessToken, AccessTokenSecret);
-		}
-
-		// STATUS LISTENER
-		StatusListener listener = new StatusListener() {
-			public void onStatus(Status status) {
-				if(curTweetNum < tweetLimit){
-					
-
-					// println("@" + status.getUser().getScreenName() + " - " +
-					/// checks for tweets using the keyword
-					/// add user to the GPS array
-					/// println("@" + status.getUser().getId() + " id: " + tweetID);
-					// theUser = new UserProfile();
-					// UserArray.add(theUser);
-					// lat":"34.024704","long":"-84.5033",
-					float lt = new Float(34.024704);
-					float lo = new Float(-84.5033);
-					//*
-					if(status.getUser().isGeoEnabled()){
-						
-						status.getGeoLocation();
-						// println("GEOLOC: " + status.getGeoLocation());
-
-					} else {
-						// println("NO GEOLOC: " + theMarker.theLocation);
-					//// find random lat and long
-						int tempLoc = (int)random(LatLongLength);
-						//// populate!
-						try{
-							lt =latArray[tempLoc];
-							lo =longArray[tempLoc];
-						} catch (Exception e){
-							println("Can't parse locations");
-							lt = new Float(34.024704);//latArray[tempLoc];
-							lo = new Float(-84.5033);//longArray[tempLoc];
-						}
-						
-					}
-			        if (status.getGeoLocation() != null) {
-			        	
-			            GeoLocation alocation =status.getGeoLocation();
-			            String aloc = alocation.toString();
-			            println("REAL GEO DATA: " + aloc);
-			            
-			        }
-					
-					theMarker = new GPSMarker(lo,lt);
-					/// theMarker = new GPSMarker(longArray[i], latArray[i]);
-					theMarker.computePosOnSphere(EARTH_RADIUS);
-					GPSArray.add(theMarker);
-					theMarker.doInitSpawn();
-					/// add all data to user profile
-					theMarker.userID = status.getUser().getId();
-					theMarker.StatusID = status.getId();
-					theMarker.userName = status.getUser().getName();
-					theMarker.screenName = status.getUser().getScreenName();
-					theMarker.tweetText = status.getText();
-					theMarker.timeZone = status.getUser().getTimeZone();
-					theMarker.followersCount = status.getUser().getFollowersCount();
-					theMarker.friendsCount = status.getUser().getFriendsCount();
-					theMarker.favoritesCount = status.getUser().getFollowersCount();
-					theMarker.theLocation = status.getUser().getLocation();
-					// theMarker.createdAt = status.getUser().getCreatedAt();
-					theMarker.createdAt = status.getCreatedAt();
-
-
-					if(status.getUser().isGeoEnabled()){
-						theMarker.hasGeo = true;
-						status.getGeoLocation();
-						println("GEOLOC: " + status.getGeoLocation());
-
-					} else {
-						println("NO GEOLOC: " + theMarker.theLocation);
-					}
-					
-					
-					curTweetNum +=1;
-		
-					// update max followers, favorites, and friends
-					// this allows for scalable amount indicators
-					if(dataProfile.maxFollowers <= theMarker.followersCount){
-						dataProfile.maxFollowers = theMarker.followersCount;
-		
-					}
-					if(dataProfile.maxFavorites <= theMarker.favoritesCount){
-						dataProfile.maxFavorites = theMarker.favoritesCount;
-		
-					}
-					if(dataProfile.maxFriends <= theMarker.friendsCount){
-						dataProfile.maxFriends = theMarker.friendsCount;
-		
-					}
-					/// REPLY CHECKS
-					if(status.getInReplyToScreenName() != null){
-						theMarker.replyToScreenName = status.getInReplyToScreenName();
-						// println(theUser.screenName + " replied from: " + theUser.replyToScreenName);
-					}
-		
-					//// RETWEET CHECKS
-					try{
-						boolean isReTweet = status.isRetweet();
-						if(isReTweet == true){
-							theMarker.reTweetCount = (int)status.getRetweetCount();
-							theMarker.isReTweet = true;
-							theMarker.reTweetToID = status.getInReplyToUserId();
-							theMarker.replyToScreenName = status.getInReplyToScreenName();
-		
-							// println("Re tweeting: " + twitterF.getRetweetedByMe(new Paging(1)));
-							/// if so, let's see who's been retweeting!
-							//*
-							// https://api.twitter.com/1/statuses/145140823560957952/retweeted_by.json?count=100&page=1
-							// doAPIQuery("https://api.twitter.com/1/statuses/" + status.getId() + "/retweeted_by.json");
-							// Twitter twitterRT = new TwitterFactory().getInstance();
-							/// IDs ids = twitterF.getRetweetedByIDs(tweetID, new Paging(5));
-							Status reTweetStat = status.getRetweetedStatus();
-							long reTweetID = reTweetStat.getId();
-							IDs ids = twitterF.getRetweetedByIDs(reTweetID, new Paging(5));
-							/// println("RETWEETS: " + reTweetStat);
-							// List<User> users = twitterRT.getRetweetedBy(status.getId(), new Paging(1));
-							/// println(theUser.screenName + " Retweeted " + status.getId() + " " + theUser.reTweetCount + " times " + ids);
-							 for (long id : ids.getIDs()) {
-					                // println("RETWEETED BY: " + id);
-					         }
-							// println(status.getId() + " RETWEETED BY: " + twitterF.getRetweetedByIDs((long)status.getId(),  new Paging(1)));
-							/// ids = twitter.getRetweetedByIDs(Long.parseLong(args[0]), new Paging(page, 100));
-							/// add a re-tweet user
-		
-							 ///*/
-							addRTUser(lo,lt);
-		
-						} else {
-							/// theUser.isReTweet = false;
-						}
-					} catch (Exception e){
-						println("retweet error: rate limited");
-					}
-					
-		
-					/// to get a more detailed user profile
-					/// check to see if we're under the limit for twitter queries
-		
-		
-					/// if so, do twitter query in separate thread
-					// getUserInfo(theUser, newID);
-				}
-
-			}
-
-			public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-				// System.out.println("Got a status deletion notice id:" +
-				// statusDeletionNotice.getStatusId());
-			}
-
-			public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
-				// System.out.println("Got track limitation notice:" +
-				// numberOfLimitedStatuses);
-			}
-
-			public void onScrubGeo(long userId, long upToStatusId) {
-				System.out.println("Got scrub_geo event userId:" + userId
-						+ " upToStatusId:" + upToStatusId);
-			}
-
-			public void onException(Exception ex) {
-				ex.printStackTrace();
-			}
-		};
-
-		/// this adds a user to the re-tweet array
-		private void addRTUser(float lo, float lt){
-			theMarker = new GPSMarker(lo,lt);
-			RTArray.add(theMarker);
-			// theUser.userID = userID;
-			// theUser.StatusID = tweetID;
-
-		}
-		///
-		private void doAPIQuery(String theString){
-			String thePath = theString;
-			String theXML[] = loadStrings(thePath);
-			String theXMLString = join(theXML, "").replace("> <", "><");
-			println("XML RETWEET: " + theXMLString);
-
-
-		}
-		
-		///// DETAILED QUERY /////////////////////
-		public void getUserInfo(GPSMarker theMarker, long newID){
-			// /*
-			int tid = (int)newID;
-			String tPath = thePath + tid;
-			println("SEARCHING: " + thePath + tid);
-			try{
-				dbData = new JSONObject(join(loadStrings(tPath), ""));
-				// results = dbData.getJSONArray("id");
-				// println(results);
-				
-				//
-				println("user name: " + theMarker.userName);
-				println("screen name: " + theMarker.screenName);
-				println("timestamp: " + theMarker.createdAt);
-				println("geoCoords: " + theMarker.geoCoords);
-				println("reply to ID: " + theMarker.replyToID);
-				println("followers" + theMarker.followersCount);
-				println("friends" + theMarker.friendsCount);
-				println("favorites: " + theMarker.favoritesCount);
-				println("time zone: " + theMarker.timeZone);
-				//
-
-
-				// numResults =  results.length();
-
-			} catch (JSONException e){
-				println("json error");
-			}
-			// */
-
-		}
 
 
 	///////////////////////////////
@@ -1085,8 +824,15 @@ public class EpsonPlanet extends PApplet {
 		}
 		/// this does nothing
 		if (key == 'd') {
-
+			isVideoPlaying = true;
+			println("COUNTER: " + videoCounter + " " + videoPaths.length + videoPaths[videoCounter]);
+			videoCounter ++;
+			if(videoCounter >= videoPaths.length){
+				videoCounter = 0;
+				println("COUNTER: " + videoCounter + " " + videoPaths[videoCounter]);
+			}
 			
+			switchVideo();
 		}
 		if (key == 'f') {
 			

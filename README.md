@@ -1,6 +1,4 @@
-Epson-Planet
-============
+TwitterPlanet
+=============
 
-Global index of Epson offices with TouchOSC interface, built in Processing using the Eclipse IDE
-
-Initial commit.
+3D globe that displays twitter returns by geolocation
