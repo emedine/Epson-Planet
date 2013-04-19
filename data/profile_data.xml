@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profileData version="1.0">
+   <profile>
+	  <title>John Doe</title>
+	  <message>Quick tagline!</message>
+	  <blurb>The names "John Doe" for males, "Jane Doe" or "Jane Roe" for females, or just "Doe" non-gender-specifically are used as placeholder names for a party whose true identity is unknown or must be withheld in a legal action, case, or discussion.[1] The names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+	  <video >../video/particle_fire_loop.mov</video>
+	  <latitude>42.6847833116</latitude>
+	  <longitude>23.3190166298</longitude>
+  </profile>
+  <profile>
+	  <title>Twitter Roe</title>
+	  <message>Quick tagline!</message>
+	  <blurb>The names "Twitter Roe" for males, "JTwitter Roe" or "Twitter Roe" for females, or just "Doe" non-gender-specifically are used as placeholder names for a party whose true identity is unknown or must be withheld in a legal action, case, or discussion.[1] The names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+	  <video>../video/cinetweet_demo320x240PJPG.mov</video>
+	  <latitude>34.041595</latitude>
+	  <longitude>-118.2988</longitude>
+  </profile>
+  
+  <profile>
+	  <title>Richard Roe</title>
+	 <message>Richard Roe blurb!</message>
+	  <blurb>The names "Richard Roe" for males, "JRichard Roe" or "Richard RoeThe names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+	  <video>../video/station.mov</video>
+	  <latitude>51.5002</latitude>
+	  <longitude>-0.12620544</longitude>
+  </profile>
+  
+</profileData>

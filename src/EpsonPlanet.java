@@ -46,6 +46,7 @@ import rwmidi.MidiOutput;
 
 /// processing core libraries
 import processing.core.*;
+import processing.xml.XMLElement;
 
 /// toxiclib for 3D
 import toxi.geom.Vec3D;
@@ -53,13 +54,17 @@ import toxi.geom.mesh.Mesh3D;
 import toxi.geom.mesh.SphereFunction;
 import toxi.geom.mesh.SurfaceMeshBuilder;
 import toxi.processing.ToxiclibsSupport;
+import twitter4j.GeoLocation;
+import twitter4j.IDs;
+import twitter4j.Paging;
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
 
 //twitter libraries
 
 //java libraries
 
-///// video imports
-import processing.video.*;
 /*
  * <ul>
  * <li>Move mouse to rotate view</li>
@@ -90,12 +95,7 @@ public class EpsonPlanet extends PApplet {
 	
 	int screenWidth = 1024;
 	int screenHeight = 768;
-	
-	
-	
-	/*/
-	
-	// */
+
 	//Radius of our globe
 	private static final int EARTH_RADIUS = 300;
 
@@ -126,37 +126,39 @@ public class EpsonPlanet extends PApplet {
 	JSONObject dbData;
 	
 	
-	//// XML data for profiles
-	String xmlPath = "data/profile_data.xml";
-	// our little data class for storing config settings
-	// this class is defined in its own tab in the Processing PDE
+	//// XML data
+	XMLElement xmlFeed;
+	String xmlPath = "../data/profile_data.xml";
 	XMLConfig config;
 	
-	////// Twitter Params
-	int tweetLimit = 300; // 6; // upper limit for tweets
-	int curTweetNum = 0;
+	//// PROFILE DATA
+	int numProfiles;
+	ArrayList<String> videoPathList =  new ArrayList();
+	ArrayList<String> nameList =  new ArrayList();
+	ArrayList<String> blurbList =  new ArrayList();
+	ArrayList<String> latList =  new ArrayList();
+	ArrayList<String> longList =  new ArrayList();
+	
+	// / lat and long arrays
+	/// should switch these to array lists
+	float[] latArray;
+	float[] longArray;
+	int LatLongLength;
+
+	// array lists for users and re-tweeters
+	ArrayList<GPSMarker> GPSArray = new ArrayList();
+	ArrayList<GPSMarker> UserArray = new ArrayList();
+	ArrayList<GPSMarker> RTArray = new ArrayList();
+
 	
 	/// JSON STUFF FOR TWITTER
 	JSONArray sentimentArray;
 	JSONObject sentimentData;
 
 	
-	// array lists for users and re-tweeters
-	ArrayList<GPSMarker> GPSArray = new ArrayList();
-	ArrayList<GPSMarker> UserArray = new ArrayList();
-	ArrayList<GPSMarker> RTArray = new ArrayList();
-	
 	/// marker object
 	GPSMarker theMarker;
-	
-	
-	// TEXT POSITIONING
-	int curDataX = 100;
-	int curDataY = 100;
-	int curDataBoxW = 200;
-	int curDataBoxH = 200;
-	int curDataMargin = 10;
-	
+
 	///// FONTS
 	PFont HeaderFont = createFont("Arial Black",14, true); /// normal fonts
 	PFont BodyFont = createFont("Arial",12, true); /// normal fonts
@@ -168,12 +170,6 @@ public class EpsonPlanet extends PApplet {
 	int bgColorG = 165;
 	int bgColorB = 165;
 	
-	
-	// / lat and long arrays
-	/// these are placeholders
-	float[] latArray;
-	float[] longArray;
-	int LatLongLength;
 
 	// / PApplet stuff
 	PApplet pApp;
@@ -211,11 +207,10 @@ public class EpsonPlanet extends PApplet {
 	DataProfile dataProfile;
 	
 	
-	//// VIDEO OBJECTS
-	Movie myMovie;
-	boolean isVideoPlaying = false;
-	String videoPaths[] = {"../video/particle_fire_loop.mov","../video/station.mov","../video/particle_fire_loop.mov"};
+	//// POPUP WINDOW
+	PopupObject thePopUp;
 	int videoCounter = 0;
+	boolean isVideoPlaying = false;
 	
 	
 	/*
@@ -241,9 +236,7 @@ public class EpsonPlanet extends PApplet {
 		// size(screenWidth, screenHeight, OPENGL); /// have to hard code it if running a standalone
 		
 		smooth();
-		/// load search data
-		loadSearchData();
-
+		
 		// load earth texture image
 		earthTex = loadImage("../data/earth_4096.jpg"); //../data/earth_outlines.jpg"); //
 		// earthTex = loadImage("../data/earth_outlines.png");
@@ -269,27 +262,12 @@ public class EpsonPlanet extends PApplet {
 		// instead of passing it back and forth like a potato
 		dataProfile.pApp = this; 
 		
-		/// midi control
-		midiControl = MidiControl.getInstance();
-		midiControl.initMidi();
-		
-		/// this populates a placeholder 
-		/// location array with lat and lon values
-		initLocations();
-		
-	
-		
-		/// let's do some xml
-		// initXML();
-		
-		/// lets do some video
-		///*
-		// myMovie = new Movie(this, "../video/station.mov");
-		// myMovie.loop();
-		//*/
-		
-		//// this does locations from our original DB
-		// initLocations();
+
+		//// LOAD XML ///////
+		loadXML();
+
+		thePopUp = new PopupObject();
+
 	}
 	
 	public void draw() {
@@ -309,103 +287,79 @@ public class EpsonPlanet extends PApplet {
 
 		renderGlobe();
 		
-		if(isVideoPlaying){
-			  image(myMovie, 0, 0); 
+		if(thePopUp.isVideoPlaying){
+			  thePopUp.playVideo();
 		  }
-
-
 
 	}
 	////// VIDEO FUNCTIONS ////////////////
 	public void switchVideo(){
-		
+		thePopUp.stopVideo();
 		/// change the path of the video
-		initVideo();
-	}
-	public void initVideo(){
-		isVideoPlaying = true;
-		
-		 myMovie = new Movie(this, videoPaths[videoCounter]);
-		 // theMov.play();  //plays the movie once
-		 myMovie.loop();  //plays the movie over and over
+		thePopUp.initVideo(videoCounter);
 	}
 
-	// Called every time a new frame is available to read
-	// /*
-	public void movieEvent(Movie m) {
-		println("Reading");
-	    m.read();
-	}
-	// */
-	
-	private void initXML(){
-		/// if not, parse the xml file
-		// to the nested object hierarchy defined in the AppConfig class (see below)
-		  try {
-		    // setup object mapper using the AppConfig class
-		    JAXBContext context = JAXBContext.newInstance(XMLConfig.class);
-		    // parse the XML and return an instance of the AppConfig class
-		    config = (XMLConfig) context.createUnmarshaller().unmarshal(createInput("data/profile_data.xml"));
-		  } catch(JAXBException e) {
-		    // if things went wrong...
-		    println("error parsing xml: ");
-		    e.printStackTrace();
-		    // force quit
-		    System.exit(1);
-		  }
-		  // here we can be sure the config has been loaded successfully...
-		  // use settings to define window size
-		  size(config.width,config.height);
-		  // set window title
-		  frame.setTitle(config.title+" v"+config.versionID);
-		  // list all the urls loaded & their descriptions
-		  for(MyURL u : config.urls) {
-		    println(u.name+": "+u.url);
-		  }
+	//// end video functions
 
-				
-		
-	}
-	
-	
-	/////////////////////////
-	///// load keywords
-	///////////////////////
-	private void loadSearchData(){
-		
-		String lines[] = loadStrings("../data/search_data.txt");
-		for (int i = 0 ; i < lines.length; i++) {
-		  println(lines[i]);
-		  String tWord = lines[i];
-		  // keywords[i] = tWord;
-		}
-	}
 	
 	/////////////////////////////////////////////
 	// //init the location array 
 	///// with ip addresses from the DB
 	/////////////////////////////////////////////
+	/////// PARSE XML DATA /////////////
+	///////////////////////////////////////
+	public void loadXML(){
+		try {
+			xmlFeed = new XMLElement(this,xmlPath );
+			initXMLObject();
+		} catch(Exception e) {
+			pApp.println("unable to parse xml: " + e);
+		}
+	}
+	public void initXMLObject(){
+	
+		numProfiles = xmlFeed.getChildCount();
+		for (int i=0; i<numProfiles; i++) {
+			XMLElement profile = xmlFeed.getChild(i);
+			///* 
+			nameList.add(profile.getChild(0).getContent());
+			blurbList.add(profile.getChild(2).getContent());
+			videoPathList.add(profile.getChild(3).getContent());
+			latList.add(profile.getChild(4).getContent());
+			longList.add(profile.getChild(5).getContent());
+			
+			pApp.println("Title = " + i + profile.getChild(0).getContent());
+			pApp.println("message = " + i + profile.getChild(1).getContent());
+			pApp.println("blurb = " + i + profile.getChild(2).getContent());
+			pApp.println("video = " + i + profile.getChild(3).getContent());
+			pApp.println("lat = " + i + profile.getChild(4).getContent());
+			pApp.println("long = " + i + profile.getChild(5).getContent());
+			
+		
+		}
+		/// convert the lat and long string to floats
+		initLocations();
+
+	}
+	
+	//////// end XML parse
+	/////////////////////////////
 	
 		public void initLocations() {
 			//*
 			try {
-				dbData = new JSONObject(join(loadStrings(jsonString), ""));
-				// println("results: " + result);
-				results = dbData.getJSONArray("latlong_data");
-				// total = dbData.getInt("total");
-				// / set length of arrays
-				LatLongLength = results.length();
-				// init our marker handler
-				latArray = new float[results.length()];
-				longArray = new float[results.length()];
 
-				// println("LENGTH: " + results.length());
-				
+				// / set length of arrays
+				LatLongLength = numProfiles;
+				// init our marker handler
+				latArray = new float[LatLongLength];
+				longArray = new float[LatLongLength];
+
 				// // let's print this mother out
 				for (int i = 0; i < LatLongLength; i++) {
 
-					String theLat = results.getJSONObject(i).getString("lat");
-					String theLong = results.getJSONObject(i).getString("long");
+					String theLat = latList.get(i);
+					String theLong = longList.get(i);
 					// println(results.getJSONObject(i).getString("lat"));
 					float lt = new Float(theLat);
 					float lo = new Float(theLong);
@@ -414,14 +368,34 @@ public class EpsonPlanet extends PApplet {
 					
 				}
 
-			} catch (JSONException e) {
-				println(e);
+			} catch (Exception e) {
+				println("Error init locations: " + e);
 			}
 
 			//*/
+			initMarkers();
 			initDestroyer(); 
 		}
-	////set up markers and destroyer
+		
+		//////////////////////////
+		///// SET MARKERS ///////////
+		private void initMarkers() {
+
+			for (int i = 0; i< latList.size(); i++){
+				println("ADDING MARKER: " + i);
+				// theMarker = new GPSMarker(lo,lt);
+				theMarker = new GPSMarker(longArray[i], latArray[i]);
+				theMarker.computePosOnSphere(EARTH_RADIUS);
+				GPSArray.add(theMarker);
+				theMarker.doInitSpawn();
+				/// add all data to user profile
+				theMarker.theID = i;
+		
+			}
+		}
+
+		///////////////
+	////set destroyer
 		public void initDestroyer() {
 			
 			/// set up markers
@@ -556,30 +530,7 @@ public class EpsonPlanet extends PApplet {
 		hint(ENABLE_DEPTH_TEST);
 	}
 	
-	//// draw lines between points ////////
-	public void drawLines(){
-		float prevX1;
-		float prevY1;
-		float prevX2;
-		float prevY2;
-		for (int i = 0; i < GPSArray.size() - 1; i++) {
-			GPSMarker tMark = GPSArray.get(i);
-			GPSMarker tMark2 = GPSArray.get(i + 1);
-			
-			prevX1 = tMark.theLat;
-			prevY1 = tMark.theLong;
-			prevX2 = tMark2.theLat;
-			prevY2 = tMark2.theLong;
-			
-			stroke(255);
-			strokeWeight(5);
-			line(prevX1, prevY1, prevX2, prevY2);
-
-		}
-
-		line(new Float(33.590897), new Float(-112.3311), new Float(48.199997), new Float(16.3667));
-		
-	}
+	
 
 	////////////////////////////////
 	///////// SET CURSOR/DESTROYER 
@@ -619,8 +570,8 @@ public class EpsonPlanet extends PApplet {
 		if (!mousePressed) {
 			// println("Do mouse Y " + mouseY);
 	    	// println("Do cursor X " + mouseX);
-			// theLat = map(mouseY, 0, screenHeight, 0, 90);
-			// theLong = map(mouseX, 0, screenWidth, -180, 180);
+			theLat = map(mouseY, 0, screenHeight, 0, 90);
+			theLong = map(mouseX, 0, screenWidth, -180, 180);
 		}
 		doCursor = false;
 		
@@ -639,8 +590,21 @@ public class EpsonPlanet extends PApplet {
 			//// check to see if the destroyer is within the range of the current lat and long
 			if (dlat >= (mlat -1) && dlat <= (mlat + 1) &&  dlong <= (mlong + 1) && dlong >= (mlong - 1)){
 				GPSMarker tMark = GPSArray.get(i);
-				tMark.doHit(); //// marker hit
-				doTextReadout(tMark);
+				
+				 //// marker hit
+				tMark.doHit();
+				 //// init popup data
+				thePopUp.theName = "";
+				thePopUp.theText = "";
+				
+				thePopUp.theName = nameList.get(tMark.theID);
+				thePopUp.theText = blurbList.get(tMark.theID);
+				thePopUp.theVideoPath = videoPathList.get(tMark.theID);
+				
+			    //// showing popup data
+				thePopUp.doTextReadout(tMark.theID);
+				
+				
 			} else {
 				/// println(">>");
 			}
@@ -649,33 +613,7 @@ public class EpsonPlanet extends PApplet {
 
 	}
 
-	private void doTextReadout(GPSMarker tMark){
-		/// showing data header
-		String theDate = tMark.createdAt.toString();
-
-	    // gameNames[gameID] +
-		String theName = tMark.userName;
-		String theText = tMark.tweetText;
-	    //// showing data
-		String headerData = "";
-		String curData = "";
-		headerData += theName;
-	    curData += "\n";
-		curData += "\n" + "created at: ";
-		curData += "\n"  + theDate;
-		curData += "\n";
-	    curData += "\n" + theText;
-	    // text(curDataHeader, curDataX + (showingDataMarginX *10), curDataY + showingDataMarginY);
-	    // textSize(12);
-	    fill(0);
-	    rect(curDataX, curDataY, curDataBoxW, curDataBoxH);
-	    fill(255);
-	    textFont(HeaderFont);
-	    text(headerData, curDataX +curDataMargin, curDataY + curDataMargin, curDataBoxW - curDataMargin, curDataBoxH);
-	    textFont(BodyFont);
-	    text(curData, curDataX +curDataMargin, curDataY + curDataMargin, curDataBoxW - curDataMargin, curDataBoxH);
-		
-	}
+	
 	/////////////////////////////////
 	//////// OSC INPUT //////////////
 	/////////////////////////////////
@@ -684,9 +622,7 @@ public class EpsonPlanet extends PApplet {
 		 // print the address pattern of the received OscMessage
 		String addr = theOscMessage.addrPattern();
 	    
-		
-	
-	   
+
 	    print("### received an osc message.");
 		println("tag type: "+theOscMessage.typetag());
 		println("addr type: " + theOscMessage.addrPattern()); // it was lowercase in the documentation
@@ -824,12 +760,12 @@ public class EpsonPlanet extends PApplet {
 		}
 		/// this does nothing
 		if (key == 'd') {
-			isVideoPlaying = true;
-			println("COUNTER: " + videoCounter + " " + videoPaths.length + videoPaths[videoCounter]);
+			thePopUp.isVideoPlaying = true;
+			
 			videoCounter ++;
-			if(videoCounter >= videoPaths.length){
+			if(videoCounter >= videoPathList.size()){
 				videoCounter = 0;
-				println("COUNTER: " + videoCounter + " " + videoPaths[videoCounter]);
+				//println("COUNTER: " + videoCounter + " " + videoPaths[videoCounter]);
 			}
 			
 			switchVideo();

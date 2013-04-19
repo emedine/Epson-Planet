@@ -34,30 +34,9 @@ public class GPSMarker {
 	
 	int setSize = 12;
 	
-	///// TWITTER PROFILE DATA
-	/// USER DATA
-	  long userID;
-	  long StatusID;
-	  String userName;
-	  String screenName;
-	  String tweetText = ""; /// have a default value just in case
-	  String timeZone;
-	  String theLocation;
-	  Date createdAt;
-	  String replyToID;
-	  String geoCoords;
-	  String tweetPolarity; /// sentiment of tweet, neg is 0, neutral is 2, pos is 4;
-	  String replyToScreenName; // screen name of person replied to, if it's a reply
-	  
-	  boolean hasGeo;
-	  int followersCount = 0;
-	  int favoritesCount = 0;
-	  int friendsCount = 0;
-	  int reTweetCount = 0;
-	  long reTweetToID;
-	  //
-	  boolean isReTweet;
+	int theID;
 
+	 
 	MidiControl midiControl;
 	
 	//
