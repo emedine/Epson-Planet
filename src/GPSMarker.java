@@ -35,9 +35,6 @@ public class GPSMarker {
 	int setSize = 12;
 	
 	int theID;
-
-	 
-	MidiControl midiControl;
 	
 	//
 	DataProfile dataProfile;
@@ -58,10 +55,7 @@ public class GPSMarker {
 		// set the gps data
 		this.gps = new Vec2D(theLong, theLat);
 
-		
-		/// midi control
-		midiControl = MidiControl.getInstance();
-		//
+			//
 		/*
 		int[] numbers = { 90, 150, 30 };
 		int a = numbers[0] + numbers[1]; // Sets variable a to 240

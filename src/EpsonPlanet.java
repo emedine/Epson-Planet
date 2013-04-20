@@ -30,17 +30,13 @@
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /// xml
 import javax.xml.bind.*;
 
 /// osc stuff
 import oscP5.*;
-import rwmidi.MidiInput;
-import rwmidi.MidiOutput;
+
 // import src.SawWave;
 // import netP5.*;
 
@@ -54,12 +50,7 @@ import toxi.geom.mesh.Mesh3D;
 import toxi.geom.mesh.SphereFunction;
 import toxi.geom.mesh.SurfaceMeshBuilder;
 import toxi.processing.ToxiclibsSupport;
-import twitter4j.GeoLocation;
-import twitter4j.IDs;
-import twitter4j.Paging;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.StatusListener;
+
 
 //twitter libraries
 
@@ -120,10 +111,6 @@ public class EpsonPlanet extends PApplet {
 
 	//Render flag to show/hide labels
 	private boolean showLabels = true;
-	// //json data
-	String jsonString = "../data/LatLongData.txt";
-	JSONArray results;
-	JSONObject dbData;
 	
 	
 	//// XML data
@@ -150,12 +137,6 @@ public class EpsonPlanet extends PApplet {
 	ArrayList<GPSMarker> UserArray = new ArrayList();
 	ArrayList<GPSMarker> RTArray = new ArrayList();
 
-	
-	/// JSON STUFF FOR TWITTER
-	JSONArray sentimentArray;
-	JSONObject sentimentData;
-
-	
 	/// marker object
 	GPSMarker theMarker;
 
@@ -169,6 +150,10 @@ public class EpsonPlanet extends PApplet {
 	int bgColorR = 165;
 	int bgColorG = 165;
 	int bgColorB = 165;
+	
+	//// bgrounds
+	PImage bgImage;
+	String bgPathImagePath = "../data/parchment_bgroundBLK.png";
 	
 
 	// / PApplet stuff
@@ -186,8 +171,6 @@ public class EpsonPlanet extends PApplet {
 	float oscX1;
 	float oscY1;
 
-	/// MIDI objects
-	MidiControl midiControl;
 	
 	// destroyer
 	Destroyer theDestroyer;
@@ -240,6 +223,7 @@ public class EpsonPlanet extends PApplet {
 		// load earth texture image
 		earthTex = loadImage("../data/earth_4096.jpg"); //../data/earth_outlines.jpg"); //
 		// earthTex = loadImage("../data/earth_outlines.png");
+		bgImage = loadImage(bgPathImagePath);
 
 		// build a sphere mesh with texture coordinates
 		// sphere resolution set to 36 vertices
@@ -262,20 +246,18 @@ public class EpsonPlanet extends PApplet {
 		// instead of passing it back and forth like a potato
 		dataProfile.pApp = this; 
 		
-
+		/// init the popup object
+		thePopUp = new PopupObject();
 		//// LOAD XML ///////
 		loadXML();
-
-		thePopUp = new PopupObject();
+		
 
 	}
 	
 	public void draw() {
 
-		
-		
 		background(bgColorR, bgColorG, bgColorB);
-		
+		image(bgImage, 512, 384);
 		/*
 		 if (myMovie.available()) {
 			    myMovie.read();
@@ -296,7 +278,9 @@ public class EpsonPlanet extends PApplet {
 	public void switchVideo(){
 		thePopUp.stopVideo();
 		/// change the path of the video
-		thePopUp.initVideo(videoCounter);
+		/// have to pass an id since can't switch
+		/// on a string
+		thePopUp.switchCurVideo(videoCounter); 
 	}
 
 	//// end video functions
@@ -319,24 +303,34 @@ public class EpsonPlanet extends PApplet {
 	public void initXMLObject(){
 	
 		numProfiles = xmlFeed.getChildCount();
+		println("NUM PROFILES: " + numProfiles);
 		for (int i=0; i<numProfiles; i++) {
 			XMLElement profile = xmlFeed.getChild(i);
 			///* 
-			nameList.add(profile.getChild(0).getContent());
-			blurbList.add(profile.getChild(2).getContent());
-			videoPathList.add(profile.getChild(3).getContent());
-			latList.add(profile.getChild(4).getContent());
-			longList.add(profile.getChild(5).getContent());
-			
-			pApp.println("Title = " + i + profile.getChild(0).getContent());
-			pApp.println("message = " + i + profile.getChild(1).getContent());
-			pApp.println("blurb = " + i + profile.getChild(2).getContent());
-			pApp.println("video = " + i + profile.getChild(3).getContent());
-			pApp.println("lat = " + i + profile.getChild(4).getContent());
-			pApp.println("long = " + i + profile.getChild(5).getContent());
+			try{
+				nameList.add(profile.getChild(0).getContent());
+				blurbList.add(profile.getChild(2).getContent());
+				videoPathList.add(profile.getChild(3).getContent());
+				thePopUp.videoPath.add(profile.getChild(3).getContent());
+				latList.add(profile.getChild(4).getContent());
+				longList.add(profile.getChild(5).getContent());
+				
+				pApp.println("Title = " + i + profile.getChild(0).getContent());
+				pApp.println("message = " + i + profile.getChild(1).getContent());
+				pApp.println("blurb = " + i + profile.getChild(2).getContent());
+				pApp.println("video = " + i + profile.getChild(3).getContent());
+				pApp.println("lat = " + i + profile.getChild(4).getContent());
+				pApp.println("long = " + i + profile.getChild(5).getContent());
+			} catch (Exception e){
+				println("XML init error: " + e);
+			}
 			
 		
 		}
+		
+		//// now that we know what the video paths are
+		//// init the video in the popup window
+		// thePopUp.initVideo();
 		/// convert the lat and long string to floats
 		initLocations();
 
@@ -433,8 +427,10 @@ public class EpsonPlanet extends PApplet {
 		// each frame we only approach that rotation by 25% (0.25 value)
 		
 		lights();
+		/* this looks pink
 		ambientLight(255, 0, 0);
 		specular(255, 0, 0);
+		*/
 		// store default 2D coordinate system
 		pushMatrix();
 		// switch to 3D coordinate system and rotate view based on mouse
@@ -599,7 +595,7 @@ public class EpsonPlanet extends PApplet {
 				
 				thePopUp.theName = nameList.get(tMark.theID);
 				thePopUp.theText = blurbList.get(tMark.theID);
-				thePopUp.theVideoPath = videoPathList.get(tMark.theID);
+				// thePopUp.theVideoPath = videoPathList.get(tMark.theID);
 				
 			    //// showing popup data
 				thePopUp.doTextReadout(tMark.theID);
@@ -750,20 +746,20 @@ public class EpsonPlanet extends PApplet {
 		}
 		if(key == 'm'){
 			println("init Midi");
-			midiControl.initMidi();
-			midiControl.sendMidiNote();
+			
 		}
 		if(key == 't'){
 			println("test Midi");
 			// midiControl.initMidi();
-			midiControl.sendMidiNote();
+			/// midiControl.sendMidiNote();
+			thePopUp.initVideo();
 		}
 		/// this does nothing
 		if (key == 'd') {
 			thePopUp.isVideoPlaying = true;
 			
 			videoCounter ++;
-			if(videoCounter >= videoPathList.size()){
+			if(videoCounter >= thePopUp.videoPath.size()){
 				videoCounter = 0;
 				//println("COUNTER: " + videoCounter + " " + videoPaths[videoCounter]);
 			}
@@ -771,7 +767,7 @@ public class EpsonPlanet extends PApplet {
 			switchVideo();
 		}
 		if (key == 'f') {
-			
+			thePopUp.stopVideo();
 		}
 	}
 	
