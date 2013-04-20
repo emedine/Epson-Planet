@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 
+
+import codeanticode.gsvideo.*;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
-import processing.video.*;
 import processing.xml.*;
 
 
@@ -13,7 +14,9 @@ public class PopupObject {
 	PApplet pApp;
 	
 	// video data
-	Movie myMovie0;
+	GSMovie myMovie0;
+	
+	/*
 	Movie myMovie1;
 	Movie myMovie2;
 	Movie myMovie3;
@@ -25,7 +28,8 @@ public class PopupObject {
 	Movie myMovie9;
 	Movie myMovie10;
 	Movie myMovie11;
-	Movie curMovie;
+	*/
+	GSMovie curMovie;
 
 	boolean isVideoPlaying = false;
 	String theVideoPath = "";
@@ -64,10 +68,16 @@ public class PopupObject {
 		BodyFont = pApp.createFont("Arial",12, true); /// normal fonts
 		pfont = pApp.createFont("Arial",10, true); // use true/false for smooth/no-smooth for Control fonts
 		
+		
+		
 		// bgImage = pApp.loadImage(bgPathImagePath);
-		
-		
 
+	}
+	public void initOneVideo(){
+		/// init video
+		GSVideo.localGStreamerPath = "/Users/gst/libraries/gstreamer/macosx";
+		myMovie0 = new GSMovie(pApp, "../video/cinetweet_demo320x240PJPG.mov");
+		// myMovie0 = new GSMovie(pApp, "../video/balloon.ogg");
 	}
 
 
@@ -98,7 +108,30 @@ public class PopupObject {
 	
 	
 /////// VIDEO DATA /////////////
+	public void movieEvent(GSMovie myMovie0) {
+		  // myMovie0 = myMovie;
+		  myMovie0.read(); 
+		  pApp.println("movie event : " + myMovie0);
+	}
+	public void drawVideo() {
+		  if (myMovie0.ready()) {
+		   
+		      // Setting the speed should be done only once,
+		      // this is the reason for the if statement.
+		     
+			  // myMovie0.goToEnd();
+		      // -1 means backward playback at normal speed.
+			  // myMovie0.speed(-1.0f);
+		      // Setting to play again, since the movie stop
+		      // playback once it reached the end.
+		      myMovie0.play();
+
+		  }
+		  pApp.image(myMovie0, 0, 0, 320, 240); 
+		} 
+	
 	public void initVideo(){
+		/*
 		myMovie0 = new Movie(pApp, videoPath.get(0));
 		myMovie1 = new Movie(pApp, videoPath.get(1));
 		myMovie2 = new Movie(pApp, videoPath.get(2));	
@@ -108,6 +141,7 @@ public class PopupObject {
 		myMovie6 = new Movie(pApp, videoPath.get(6));
 		myMovie7 = new Movie(pApp, videoPath.get(7));
 		myMovie8 = new Movie(pApp, videoPath.get(8));
+		*/
 		/*
 		myMovie9 = new Movie(pApp, videoPath.get(9));
 		
@@ -120,11 +154,14 @@ public class PopupObject {
 		
 		int vID = videoID;
 		try{
+			myMovie0.play();
+			curMovie = myMovie0;
 		// curMovie.pause();
 		} catch (Exception e){
 		pApp.println("Can't stop current movie: " + e);	
 		}
 
+		/*
 		switch(vID ) {
 		
 		  case 0: 
@@ -190,9 +227,10 @@ public class PopupObject {
 		  default:
 			  pApp.println("Zulu"); 
 		    break;
+		   
 		}
 		
-
+		 */
 		try{
 
 			// myMovie = new Movie(pApp, videoPath.get(videoCounter));
@@ -207,13 +245,28 @@ public class PopupObject {
 		
 	}
 	
+	public void startVideo(){
+		try{
+			
+		/// start all videos
+		isVideoPlaying = true;
+		pApp.println("START VIDEO" + isVideoPlaying);
+		
+		myMovie0.play();
+		} catch (Exception e){
+			pApp.println("Can't stop video: " + e);
+			
+		}
+	}
+	
 	public void stopVideo(){
 		try{
 			
 		/// stop all videos
-		pApp.println("Stop VIDEO");
+		isVideoPlaying = false;
+		pApp.println("Stop VIDEO" + isVideoPlaying);
 
-		myMovie1.stop();
+		myMovie0.stop();
 		} catch (Exception e){
 			pApp.println("Can't stop video: " + e);
 			
@@ -221,30 +274,23 @@ public class PopupObject {
 	}
 	
 	public void playVideo(){
-		if(isVideoPlaying == true){
-			try{
-				//// use switch statement to play correct movie
-				
-				curMovie.play();
-				// end switch
-				pApp.image(curMovie, curDataX + curDataMargin, curDataY + curDataMargin); 
-			} catch (Exception e){
-				pApp.println("Video error: " + e);
-			}
+		
+		try{
+
+			myMovie0.play();
+			// end switch
+			pApp.image(myMovie0, 0, 0, 320, 240); 
+			pApp.println("playvideo function : " + isVideoPlaying);
+			// pApp.image(myMovie0, curDataX + curDataMargin, curDataY + curDataMargin, 415,333); 
+			// pApp.image(myMovie0, curDataX + curDataMargin, curDataY + curDataMargin, 415,333); 
+		} catch (Exception e){
+			pApp.println("Video error: " + e);
 		}
+
 		
 	}
 
 
-
-
-	// Called every time a new frame is available to read
-	// /*
-	public void movieEvent(Movie m) {
-		// pApp.println("Reading");
-	    m.read();
-	}
-	
 	// end video
 	////////////////
 	

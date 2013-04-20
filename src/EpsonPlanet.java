@@ -34,6 +34,8 @@ import java.util.ArrayList;
 /// xml
 import javax.xml.bind.*;
 
+import codeanticode.gsvideo.GSMovie;
+
 /// osc stuff
 import oscP5.*;
 
@@ -195,6 +197,10 @@ public class EpsonPlanet extends PApplet {
 	int videoCounter = 0;
 	boolean isVideoPlaying = false;
 	
+	///// VIDEO OBJECT
+	VideoPlayer theVideoPlayer;
+	
+	
 	
 	/*
 	public void init() {
@@ -248,6 +254,11 @@ public class EpsonPlanet extends PApplet {
 		
 		/// init the popup object
 		thePopUp = new PopupObject();
+		
+		/// init the video player
+		theVideoPlayer = new VideoPlayer();
+		theVideoPlayer.init();
+		
 		//// LOAD XML ///////
 		loadXML();
 		
@@ -257,25 +268,32 @@ public class EpsonPlanet extends PApplet {
 	public void draw() {
 
 		background(bgColorR, bgColorG, bgColorB);
-		image(bgImage, 512, 384);
-		/*
-		 if (myMovie.available()) {
-			    myMovie.read();
-		  }
-		 
-		image(myMovie, 0, 0);
+		// ssimage(bgImage, 512, 384);
 		
-		*/
 
 		renderGlobe();
 		
-		if(thePopUp.isVideoPlaying){
-			  thePopUp.playVideo();
-		  }
+		
+		theVideoPlayer.drawVideo();
+		/*
+		if(thePopUp.isVideoPlaying == true){
+		   // thePopUp.playVideo();
+			println("LAYING VIDEO" + thePopUp.isVideoPlaying);
+		   thePopUp.drawVideo();
+		 }
+		 */
 
 	}
+	
+	public void movieEvent(GSMovie myMovie) {
+
+		  theVideoPlayer.myMovie.read();  
+		  pApp.println("movie event : " + myMovie);
+	}
+	
 	////// VIDEO FUNCTIONS ////////////////
 	public void switchVideo(){
+		thePopUp.isVideoPlaying = false;
 		thePopUp.stopVideo();
 		/// change the path of the video
 		/// have to pass an id since can't switch
@@ -749,13 +767,13 @@ public class EpsonPlanet extends PApplet {
 			
 		}
 		if(key == 't'){
-			println("test Midi");
-			// midiControl.initMidi();
-			/// midiControl.sendMidiNote();
-			thePopUp.initVideo();
+			println("add video Midi");
+			
+			thePopUp.initOneVideo();
 		}
 		/// this does nothing
-		if (key == 'd') {
+		if (key == 'p') {
+			/*
 			thePopUp.isVideoPlaying = true;
 			
 			videoCounter ++;
@@ -763,11 +781,16 @@ public class EpsonPlanet extends PApplet {
 				videoCounter = 0;
 				//println("COUNTER: " + videoCounter + " " + videoPaths[videoCounter]);
 			}
+			*/
 			
-			switchVideo();
+			// thePopUp.startVideo();
+			theVideoPlayer.startVideo();
+			thePopUp.isVideoPlaying = true;
 		}
-		if (key == 'f') {
-			thePopUp.stopVideo();
+		if (key == 's') {
+			// thePopUp.stopVideo();
+			theVideoPlayer.stopVideo();
+			thePopUp.isVideoPlaying = false;
 		}
 	}
 	
