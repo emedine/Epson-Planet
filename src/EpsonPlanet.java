@@ -122,6 +122,7 @@ public class EpsonPlanet extends PApplet {
 	
 	//// PROFILE DATA
 	int numProfiles;
+	int curID;
 	ArrayList<String> videoPathList =  new ArrayList();
 	ArrayList<String> nameList =  new ArrayList();
 	ArrayList<String> blurbList =  new ArrayList();
@@ -181,7 +182,7 @@ public class EpsonPlanet extends PApplet {
 	float theLat= 500;
 	float theLong = 500;
 
-	
+	/////// carmera vars
 	double defaultCamX = 2.4999995; 
 	double defaultCamY = 3.1199994;
 	double theCamX = defaultCamX; // 2.4999995; /// initial camera position
@@ -194,12 +195,8 @@ public class EpsonPlanet extends PApplet {
 	
 	//// POPUP WINDOW
 	PopupObject thePopUp;
-	int videoCounter = 0;
+	int videoCounter = 0; /// current video
 	boolean isVideoPlaying = false;
-	
-	///// VIDEO OBJECT
-	VideoPlayer theVideoPlayer;
-	
 	
 	
 	/*
@@ -255,10 +252,6 @@ public class EpsonPlanet extends PApplet {
 		/// init the popup object
 		thePopUp = new PopupObject();
 		
-		/// init the video player
-		theVideoPlayer = new VideoPlayer();
-		theVideoPlayer.init();
-		
 		//// LOAD XML ///////
 		loadXML();
 		
@@ -268,27 +261,29 @@ public class EpsonPlanet extends PApplet {
 	public void draw() {
 
 		background(bgColorR, bgColorG, bgColorB);
-		// ssimage(bgImage, 512, 384);
+		image(bgImage, 512, 384);
 		
 
 		renderGlobe();
 		
-		
-		theVideoPlayer.drawVideo();
 		/*
 		if(thePopUp.isVideoPlaying == true){
 		   // thePopUp.playVideo();
-			println("LAYING VIDEO" + thePopUp.isVideoPlaying);
+			// println("LAYING VIDEO" + thePopUp.isVideoPlaying);
 		   thePopUp.drawVideo();
 		 }
-		 */
+		
+		*/
+		
 
 	}
 	
-	public void movieEvent(GSMovie myMovie) {
-
-		  theVideoPlayer.myMovie.read();  
-		  pApp.println("movie event : " + myMovie);
+	////////////////////////////////////////////////////////
+	///////// FOR SOME REASON THIS HAS TO BE IN MAIN
+	////////////////////////////////////////////////////////
+	public void movieEvent(GSMovie curMovie) {
+		  thePopUp.curMovie.read();  
+		  //// pApp.println("movie event : " + curMovie);
 	}
 	
 	////// VIDEO FUNCTIONS ////////////////
@@ -547,7 +542,7 @@ public class EpsonPlanet extends PApplet {
 	
 
 	////////////////////////////////
-	///////// SET CURSOR/DESTROYER 
+	///////// DESTROYER 
 	////////////////////////////////////
 
 	
@@ -593,6 +588,7 @@ public class EpsonPlanet extends PApplet {
 		theDestroyer.computePosOnSphere(EARTH_RADIUS);
 
 		//// CHECK FOR INTERSECTION with other markers
+		boolean isPopupVisible = false;
 		for(int i=0; i<GPSArray.size(); i++){
 		// for(int i=0; i<2; i++){
 			float dlat = theDestroyer.theLat;
@@ -602,7 +598,8 @@ public class EpsonPlanet extends PApplet {
 			// println("dlat " + dlat + " mlat: " + mlat);
 			// println("dlong " + dlong + " mlong: " + mlong);
 			//// check to see if the destroyer is within the range of the current lat and long
-			if (dlat >= (mlat -1) && dlat <= (mlat + 1) &&  dlong <= (mlong + 1) && dlong >= (mlong - 1)){
+			/// if (dlat >= (mlat -1) && dlat <= (mlat + 1) &&  dlong <= (mlong + 1) && dlong >= (mlong - 1)){
+			if (dlat >= (mlat -2) && dlat <= (mlat + 2) &&  dlong <= (mlong + 2) && dlong >= (mlong - 2)){
 				GPSMarker tMark = GPSArray.get(i);
 				
 				 //// marker hit
@@ -616,13 +613,27 @@ public class EpsonPlanet extends PApplet {
 				// thePopUp.theVideoPath = videoPathList.get(tMark.theID);
 				
 			    //// showing popup data
-				thePopUp.doTextReadout(tMark.theID);
+				/// test to see if we're playing a different video than before
+				if(curID != tMark.theID){
+					println("Cur ID: " + curID + " new ID: " + tMark.theID);
+					/// if so, stop current, switch, then wait for start
+					thePopUp.stopVideo();
+					thePopUp.switchCurVideo(tMark.theID);
+					curID = tMark.theID;
+				} 
 				
+				////
+				thePopUp.drawPopup(tMark.theID);
+				isPopupVisible = true;
 				
 			} else {
 				/// println(">>");
+				// thePopUp.isVisible = false;
 			}
 		
+		}
+		if(isPopupVisible == false){
+			thePopUp.stopVideo();
 		}
 
 	}
@@ -767,30 +778,29 @@ public class EpsonPlanet extends PApplet {
 			
 		}
 		if(key == 't'){
-			println("add video Midi");
-			
-			thePopUp.initOneVideo();
-		}
-		/// this does nothing
-		if (key == 'p') {
-			/*
-			thePopUp.isVideoPlaying = true;
-			
-			videoCounter ++;
-			if(videoCounter >= thePopUp.videoPath.size()){
-				videoCounter = 0;
+			println("SWITCH< BITCHES");
+			//*
+
+			thePopUp.videoCounter ++;
+			if(thePopUp.videoCounter >= thePopUp.videoPath.size()){
+				thePopUp.videoCounter = 0;
 				//println("COUNTER: " + videoCounter + " " + videoPaths[videoCounter]);
 			}
-			*/
+			thePopUp.switchCurVideo(thePopUp.videoCounter);
 			
-			// thePopUp.startVideo();
-			theVideoPlayer.startVideo();
-			thePopUp.isVideoPlaying = true;
 		}
+		/// play video
+		if (key == 'p') {
+
+			thePopUp.isVideoPlaying = true;
+			thePopUp.startVideo();
+		}
+		/// swap video
 		if (key == 's') {
-			// thePopUp.stopVideo();
-			theVideoPlayer.stopVideo();
+			
+			
 			thePopUp.isVideoPlaying = false;
+			thePopUp.stopVideo();
 		}
 	}
 	

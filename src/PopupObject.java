@@ -14,28 +14,29 @@ public class PopupObject {
 	PApplet pApp;
 	
 	// video data
+	ArrayList<String> videoPath =  new ArrayList(); /// have to do this since cant' switch on string
 	GSMovie myMovie0;
+	GSMovie myMovie1;
+	GSMovie myMovie2;
+	GSMovie myMovie3;
+	GSMovie myMovie4;
+	GSMovie myMovie5;
+	GSMovie myMovie6;
+	GSMovie myMovie7;
+	GSMovie myMovie8;
+	GSMovie myMovie9;
+	GSMovie myMovie10;
+	GSMovie myMovie11;
 	
-	/*
-	Movie myMovie1;
-	Movie myMovie2;
-	Movie myMovie3;
-	Movie myMovie4;
-	Movie myMovie5;
-	Movie myMovie6;
-	Movie myMovie7;
-	Movie myMovie8;
-	Movie myMovie9;
-	Movie myMovie10;
-	Movie myMovie11;
-	*/
 	GSMovie curMovie;
 
 	boolean isVideoPlaying = false;
+	boolean isVisible = false;
 	String theVideoPath = "";
 	int videoCounter = 0;
-	ArrayList<String> videoPath =  new ArrayList(); /// have to do this since cant' switch on string
-
+	int vidWidth = 415;
+	int vidHeight = 233;
+	
 	
 	// text data
 	int curDataX = 500;
@@ -71,13 +72,16 @@ public class PopupObject {
 		
 		
 		// bgImage = pApp.loadImage(bgPathImagePath);
-
+		/// initialize all video paths
+		initVideo();
 	}
-	public void initOneVideo(){
-		/// init video
-		GSVideo.localGStreamerPath = "/Users/gst/libraries/gstreamer/macosx";
-		myMovie0 = new GSMovie(pApp, "../video/cinetweet_demo320x240PJPG.mov");
-		// myMovie0 = new GSMovie(pApp, "../video/balloon.ogg");
+	
+	public void drawPopup(int theID){
+		
+		// pApp.lights();
+		doTextReadout(theID);
+		drawVideo();
+	
 	}
 
 
@@ -108,13 +112,32 @@ public class PopupObject {
 	
 	
 /////// VIDEO DATA /////////////
-	public void movieEvent(GSMovie myMovie0) {
-		  // myMovie0 = myMovie;
-		  myMovie0.read(); 
-		  pApp.println("movie event : " + myMovie0);
-	}
+
+	
+	public void initVideo(){
+		GSVideo.localGStreamerPath = "/Users/gst/libraries/gstreamer/macosx";
+		
+		myMovie0 = new GSMovie(pApp, "../video/EpsonVignettes0.mov");
+		myMovie1 = new GSMovie(pApp, "../video/EpsonVignettes1.mov");
+		myMovie2 = new GSMovie(pApp, "../video/EpsonVignettes2.mov");
+		myMovie3 = new GSMovie(pApp, "../video/EpsonVignettes0.mov");
+		myMovie4 = new GSMovie(pApp, "../video/EpsonVignettes1.mov");
+		myMovie5 = new GSMovie(pApp, "../video/EpsonVignettes2.mov");	
+		myMovie6 = new GSMovie(pApp, "../video/EpsonVignettes0.mov");
+		myMovie7 = new GSMovie(pApp, "../video/EpsonVignettes1.mov");
+		myMovie8 = new GSMovie(pApp, "../video/EpsonVignettes2.mov");
+		myMovie9 = new GSMovie(pApp, "../video/EpsonVignettes0.mov");	
+		myMovie10 = new GSMovie(pApp, "../video/EpsonVignettes1.mov");
+		myMovie11 = new GSMovie(pApp, "../video/EpsonVignettes2.mov");
+		//*/	
+		curMovie = myMovie0;
+	}	
+	
+	
 	public void drawVideo() {
-		  if (myMovie0.ready()) {
+
+		  
+		  if (isVideoPlaying == true) {
 		   
 		      // Setting the speed should be done only once,
 		      // this is the reason for the if statement.
@@ -124,102 +147,102 @@ public class PopupObject {
 			  // myMovie0.speed(-1.0f);
 		      // Setting to play again, since the movie stop
 		      // playback once it reached the end.
-		      myMovie0.play();
-
+			 
+		  } else {
+			  stopVideo();
 		  }
-		  pApp.image(myMovie0, 0, 0, 320, 240); 
+		  pApp.image(curMovie, curDataX + vidWidth/2 + curDataMargin, curDataY + vidHeight/2 + curDataMargin, 415, 233);
+
+		  
 		} 
 	
-	public void initVideo(){
-		/*
-		myMovie0 = new Movie(pApp, videoPath.get(0));
-		myMovie1 = new Movie(pApp, videoPath.get(1));
-		myMovie2 = new Movie(pApp, videoPath.get(2));	
-		myMovie3 = new Movie(pApp, videoPath.get(3));
-		myMovie4 = new Movie(pApp, videoPath.get(4));
-		myMovie5 = new Movie(pApp, videoPath.get(5));		
-		myMovie6 = new Movie(pApp, videoPath.get(6));
-		myMovie7 = new Movie(pApp, videoPath.get(7));
-		myMovie8 = new Movie(pApp, videoPath.get(8));
-		*/
-		/*
-		myMovie9 = new Movie(pApp, videoPath.get(9));
+	public void startVideo(){
+		try{
+
+		pApp.println("START VIDEO" + isVideoPlaying);
 		
-		myMovie10 = new Movie(pApp, videoPath.get(10));	
-		myMovie11 = new Movie(pApp, videoPath.get(11));	
-		*/		
-	}	
+		curMovie.play();
+		} catch (Exception e){
+			pApp.println("Can't stop video: " + e);
+			
+		}
+	}
+	
+	public void stopVideo(){
+		try{
+
+		pApp.println("Stop VIDEO" + isVideoPlaying);
+
+		curMovie.stop();
+		} catch (Exception e){
+			pApp.println("Can't stop video: " + e);
+			
+		}
+	}
+	
+	
 	public void switchCurVideo(int videoID){
 		// videoCounter = tCounter;
-		
 		int vID = videoID;
-		try{
-			myMovie0.play();
-			curMovie = myMovie0;
-		// curMovie.pause();
-		} catch (Exception e){
-		pApp.println("Can't stop current movie: " + e);	
-		}
-
-		/*
-		switch(vID ) {
+		///*
+		switch(vID) {
 		
 		  case 0: 
 		    pApp.println("myMovie0");
-			myMovie0 = new Movie(pApp, videoPath.get(0));
+			
 		    curMovie = myMovie0;
 		    break;
 		    
 		  case 1:
 			  pApp.println("myMovie1"); 
-			  myMovie1 = new Movie(pApp, videoPath.get(1));
+			
 			  curMovie = myMovie1;
 		    break;
 		    
 		  case 2:
 			  pApp.println("myMovie2"); 
-			  myMovie2 = new Movie(pApp, videoPath.get(2));	
+			 
 			  curMovie = myMovie2;
 		    break;	    
 		    
 		  case 3:
 			  pApp.println("myMovie3"); 
-			  myMovie3 = new Movie(pApp, videoPath.get(3));
+			 
 			  curMovie = myMovie3;
 		    break;	    
 		    
 		  case 4:
 			  pApp.println("myMovie4"); 
-			  myMovie4 = new Movie(pApp, videoPath.get(4));
+			 
 			  curMovie = myMovie4;
 		    break;	    
 		  case 5:
-				myMovie5 = new Movie(pApp, videoPath.get(5));
+				
 			  curMovie = myMovie5;
 		    break;
 		    
 		  case 6:
 			  pApp.println("myMovie6"); 
-			  myMovie6 = new Movie(pApp, videoPath.get(6));
+			 
 			  curMovie = myMovie6;
 		    break;	    
 		    
 		    
 		  case 7:
 			  pApp.println("myMovie7"); 
-			  myMovie7 = new Movie(pApp, videoPath.get(7));
+			 
 			  curMovie = myMovie7;
 		    break;	    
 		    
 		  case 8:
 			  pApp.println("myMovie8"); 
-			  myMovie8 = new Movie(pApp, videoPath.get(8));
+			  
 			  curMovie = myMovie8;
 		    break;    
 		    
 		  case 9:
 			  pApp.println("myMovie9"); 
-			  myMovie8 = new Movie(pApp, videoPath.get(8));
+			  
 			  curMovie = myMovie9;
 		    break;   	    
 		    
@@ -230,66 +253,11 @@ public class PopupObject {
 		   
 		}
 		
-		 */
-		try{
-
-			// myMovie = new Movie(pApp, videoPath.get(videoCounter));
-			// pApp.println("videoCounter: " + videoCounter + " " + videoPath.get(videoCounter));
-			// curMovie.play();  //plays the movie once
-			// curMovie.loop();  //plays the movie over and over
-			 
-			 
-		} catch (Exception e){
-			pApp.println("can't init video: " + e);
-		}
+		
 		
 	}
 	
-	public void startVideo(){
-		try{
-			
-		/// start all videos
-		isVideoPlaying = true;
-		pApp.println("START VIDEO" + isVideoPlaying);
-		
-		myMovie0.play();
-		} catch (Exception e){
-			pApp.println("Can't stop video: " + e);
-			
-		}
-	}
 	
-	public void stopVideo(){
-		try{
-			
-		/// stop all videos
-		isVideoPlaying = false;
-		pApp.println("Stop VIDEO" + isVideoPlaying);
-
-		myMovie0.stop();
-		} catch (Exception e){
-			pApp.println("Can't stop video: " + e);
-			
-		}
-	}
-	
-	public void playVideo(){
-		
-		try{
-
-			myMovie0.play();
-			// end switch
-			pApp.image(myMovie0, 0, 0, 320, 240); 
-			pApp.println("playvideo function : " + isVideoPlaying);
-			// pApp.image(myMovie0, curDataX + curDataMargin, curDataY + curDataMargin, 415,333); 
-			// pApp.image(myMovie0, curDataX + curDataMargin, curDataY + curDataMargin, 415,333); 
-		} catch (Exception e){
-			pApp.println("Video error: " + e);
-		}
-
-		
-	}
-
 
 	// end video
 	////////////////

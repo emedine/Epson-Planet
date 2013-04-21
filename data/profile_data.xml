@@ -1,80 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profileData version="1.0">
    <profile>
-	  <name>John Doe</name>
+	  <name>ARGENTINA</name>
 	  <title>EPSON VENEZUELA, SRL.</title>
-	  <blurb>The names "John Doe" for males, "Jane Doe" or "Jane Roe" for females, or just "Doe" non-gender-specifically are used as placeholder names for a party whose true identity is unknown or must be withheld in a legal action, case, or discussion.[1] The names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+	  <blurb>Mercedes Bonini (Daughter of Epson Employee, Adriana Banar), Adriana Banar, Gerente Regional de Relaciones Públicas de Epson </blurb>
 	  <video >../video/EpsonVignettes1.mov</video>
-	  <latitude>42.6847833116</latitude>
-	  <longitude>23.3190166298</longitude>
+	  <latitude>10.5</latitude>
+	  <longitude>-66.9167</longitude>
 	  <address>Calle 4 Con Calle 11-1
 EDF. Epson - La Urbina Sur
 Caracas, VENEZUELA</address>
   </profile>
+  
   <profile>
-	  <name>Peru Roe</name>
-	  <title>EPSON PERU, S.A.</title>
-	  <blurb>The names "Twitter Roe" for males, "JTwitter Roe" or "Twitter Roe" for females, or just "Doe" non-gender-specifically are used as placeholder names for a party whose true identity is unknown or must be withheld in a legal action, case, or discussion.[1] The names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+	  <name>BRASIL</name>
+	  <title>EPSON BRASIL</title>
+	  <blurb>1- Elaine Santos Silva (Wife of Danilo de Oliveira), Danilo de Oliveira
+Worker (Info to be verified), 2-  Elizabeth Pedraçoli Caldatto (Mother of Eduardo Caldatto)
+Daiane Pedraçoli Caldatto, (Sister of Eduardo Caldatto), Eduardo Caldatto, Worker (Info to be verified)</blurb>
 	  <video>../video/cinetweet_demo320x240PJPG.mov</video>
-	  <latitude>34.041595</latitude>
-	  <longitude>-118.2988</longitude>
+	  <latitude>-22.9</latitude>
+	  <longitude>-43.2333</longitude>
 	  <address>Av. Canaval Y Moreyra 590
 LIMA, 27 PERU</address>
   </profile>
   
   <profile>
-	  <name>Mexico Roe</name>
-	 <title>EPSON MEXICO, S.A. DE C.V.</title>
-	  <blurb>The names "Richard Roe" for males, "JRichard Roe" or "Richard RoeThe names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+	  <name>COLOMBIA</name>
+	 <title>EPSON COLOMBIA</title>
+	  <blurb>1- video, Catalina Salguero (Wife of Francisco Valderrama), Francisco Valderrama, Gerente General de Epson Colombia 
+</blurb>
 	  <video>../video/station.mov</video>
-	  <latitude>51.5002</latitude>
-	  <longitude>-0.12620544</longitude>
+	  <latitude>4.6</latitude>
+	  <longitude>-74.0833</longitude>
 	  <address>Boulevard Manual Avila Camacho 389
 Edificio 1 Conjunto Legaria
 Col., Irrigacio, C.P. 11500
 MEXICO, D.F.</address>
   </profile>
   
-    <profile>
-	  <name>Colombia Roe</name>
-	 <title>EPSON COLOMBIA, LTDA</title>
+  <profile>
+	  <name>CHILE</name>
+	 <title>EPSON CHILE</title>
 	  <blurb>The names "Richard Roe" for males, "JRichard Roe" or "Richard RoeThe names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
 	  <video>../video/station.mov</video>
-	  <latitude>51.5002</latitude>
-	  <longitude>-0.12620544</longitude>
+	  <latitude>-33.45</latitude>
+	  <longitude>-70.6667</longitude>
 	  <address>Calle 100 No 21-64 PISO
 Bogota, COLOMBIA</address>
   </profile>
   
-    <profile>
-	  <name>Chile Doe</name>
-	 <title>EPSON CHILE., SA</title>
-	  <blurb>The names "Richard Roe" for males, "JRichard Roe" or "Richard RoeThe names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+  <profile>
+	  <name>CENTROAMERICA</name>
+	 <title>EPSON CENTROAMERICA</title>
+	  <blurb>1 video, Natalia Vargas ose Pablo Rodriguez Gerente de Producto-SDIDM </blurb>
 	  <video>../video/station.mov</video>
-	  <latitude>51.5002</latitude>
-	  <longitude>-0.12620544</longitude>
-	  <address>La Concepcion 322, Piso 3
-Providencia, Santiago
-CHILE</address>
+	  <latitude>10.05</latitude>
+	  <longitude>-84.1167</longitude>
+	  <address>La Concepcion 322, Piso 3 Providencia, Santiago CHILE</address>
   </profile>
   
     <profile>
-	  <name>Brazil Roe</name>
-	 <title>EPSON BRASIL, LTDA</title>
-	  <blurb>The names "Richard Roe" for males, "JRichard Roe" or "Richard RoeThe names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+	  <name>ECUADOR</name>
+	 <title>EPSON ECUADOR</title>
+	  <blurb>1- 
+Carlos Enrique Aguirre Moreno (Husband of Karinna Riofrio) 
+Carlos Daniel Aguirre Riofrio (Son of Karinna RioFrio) 
+Cayetano Nicolás Aguirre Riofrio (Son of Karinna RioFrio) 
+Karinna Riofrio 
+Gerente de Epson Ecuador 
+2- Gustavo Xavier Jaramillo González (Son of Ana Maria Gonzalez) 
+Ana Maria Gonzalez 
+Gerente de Ventas </blurb>
 	  <video>../video/station.mov</video>
-	  <latitude>51.5002</latitude>
-	  <longitude>-0.12620544</longitude>
+	  <latitude>-0.2167</latitude>
+	  <longitude>-78.5</longitude>
 	  <address>Av. Tucunare, 720
 Tambore Barueri
 Sao Paulo, SP 06460-020
 BRASIL</address>
   </profile>
   
-      <profile>
-	  <name>Argentina Roe</name>
-	 <title>EPSON ARGENTINA</title>
-	  <blurb>The names "Richard Roe" for males, "JRichard Roe" or "Richard RoeThe names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+    <profile>
+	  <name>LONG BEACH</name>
+	 <title>EPSON LONG BEACH</title>
+	  <blurb>1- 
+Fernando Urteaga (Son of Fernando Urteaga)
+Valentina Urteaga (Daughter of Fernando Urteaga)
+Fernando UrteagaGerente de Producto Regional de Impresoras de Gran Formato2-
+Gerardina Miele (Wife of Gerardo Gordon)
+Gerardo Gordon
+Gerente de Producto Regional de IJP
+</blurb>
 	  <video>../video/station.mov</video>
 	  <latitude>51.5002</latitude>
 	  <longitude>-0.12620544</longitude>
@@ -82,23 +99,50 @@ BRASIL</address>
   </profile>
   
       <profile>
-	  <name>Centroamerica Roe</name>
-	 <title>EPSON CENTROAMÉRICA</title>
-	  <blurb>The names "Richard Roe" for males, "JRichard Roe" or "Richard RoeThe names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+	  <name>PERU</name>
+	 <title>EPSON PERU</title>
+	  <blurb> 1-
+Ivan Valdez (Husband of Paola Medrano)
+Paola Medrano Servicio  (still need to verify this info)
+2-Iris Verónica Santoyo Noguera (Wife of Paul Cesar Morales)
+Paul Cesar Morales
+Contador (still need to verify this info)
+</blurb>
 	  <video>../video/station.mov</video>
-	  <latitude>51.5002</latitude>
-	  <longitude>-0.12620544</longitude>
+	  <latitude>-12.05</latitude>
+	  <longitude>-77.05</longitude>
 	  <address>TBD</address>
   </profile>
   
       <profile>
-	  <name>Japan Roe</name>
-	 <title>EPSON Japan Main Office</title>
-	  <blurb>The names "Richard Roe" for males, "JRichard Roe" or "Richard RoeThe names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
+	  <name>MEXICO</name>
+	 <title>EPSON MEXICO</title>
+	  <blurb>1- 
+Martha Galvez (Wife of Guillermo Reyna) 
+Guillermo Reyna Gerente de Ventas al Canal 2nd Tier 
+2- Yolanda Navarro (Wife of Mauricio Cano) 
+Mauricio Cano Diseñador Gráfico de Epson Mexico </blurb>
 	  <video>../video/station.mov</video>
-	  <latitude>51.5002</latitude>
-	  <longitude>-0.12620544</longitude>
+	  <latitude>19.4342</latitude>
+	  <longitude>-99.1386</longitude>
 	  <address>TBD</address>
   </profile>
+  
+  <profile>
+	  <name>VENEZUELA</name>
+	 <title>EPSON MEXICO</title>
+	  <blurb>1- 
+		1- video
+		Martha Reimpell (Daughter of Pablo Reimpell) 
+		Arelis Sierra (Wife of Pablo Reimpell)  Pablo Reimpell 
+		Director de Operaciones 
+		</blurb>
+	  <video>../video/station.mov</video>
+	  <latitude>10.5</latitude>
+	  <longitude>-66.9167</longitude>
+	  <address>TBD</address>
+  </profile>
+  
+  
   
 </profileData>

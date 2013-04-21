@@ -31,15 +31,11 @@ public class VideoPlayer{
 	 
 	  // VideoTester/lib/natives/macosx32
 	 
-	  // myMovie.play();
-	}
-	public void init(){
-		 GSVideo.localGStreamerPath = "/Users/gst/libraries/gstreamer/macosx";
+		GSVideo.localGStreamerPath = "/Users/gst/libraries/gstreamer/macosx";
 		  // GSVideo.localGStreamerPath = "VideoTester/lib/natives/macosx32";
 		  myMovie = new GSMovie(pApp, "../video/EpsonVignettes1.mov");
 	}
-	
-	
+
 	
 	public void drawVideo() {
 	  if (myMovie.ready()) {
