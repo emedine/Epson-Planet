@@ -117,18 +117,18 @@ public class PopupObject {
 	public void initVideo(){
 		GSVideo.localGStreamerPath = "/Users/gst/libraries/gstreamer/macosx";
 		
-		myMovie0 = new GSMovie(pApp, "../video/EpsonVignettes0.mov");
+		myMovie0 = new GSMovie(pApp, "../video/EpsonVignettes3.mov");
 		myMovie1 = new GSMovie(pApp, "../video/EpsonVignettes1.mov");
 		myMovie2 = new GSMovie(pApp, "../video/EpsonVignettes2.mov");
-		myMovie3 = new GSMovie(pApp, "../video/EpsonVignettes0.mov");
+		myMovie3 = new GSMovie(pApp, "../video/EpsonVignettes3.mov");
 		myMovie4 = new GSMovie(pApp, "../video/EpsonVignettes1.mov");
 		myMovie5 = new GSMovie(pApp, "../video/EpsonVignettes2.mov");	
-		myMovie6 = new GSMovie(pApp, "../video/EpsonVignettes0.mov");
+		myMovie6 = new GSMovie(pApp, "../video/EpsonVignettes3.mov");
 		myMovie7 = new GSMovie(pApp, "../video/EpsonVignettes1.mov");
 		myMovie8 = new GSMovie(pApp, "../video/EpsonVignettes2.mov");
-		myMovie9 = new GSMovie(pApp, "../video/EpsonVignettes0.mov");	
+		myMovie9 = new GSMovie(pApp, "../video/EpsonVignettes3.mov");	
 		myMovie10 = new GSMovie(pApp, "../video/EpsonVignettes1.mov");
-		myMovie11 = new GSMovie(pApp, "../video/EpsonVignettes2.mov");
+		myMovie11 = new GSMovie(pApp, "../video/EpsonVignettes3.mov");
 		//*/	
 		curMovie = myMovie0;
 	}	
@@ -159,7 +159,7 @@ public class PopupObject {
 	public void startVideo(){
 		try{
 
-		pApp.println("START VIDEO" + isVideoPlaying);
+		// pApp.println("START VIDEO" + isVideoPlaying);
 		
 		curMovie.play();
 		} catch (Exception e){
@@ -171,7 +171,7 @@ public class PopupObject {
 	public void stopVideo(){
 		try{
 
-		pApp.println("Stop VIDEO" + isVideoPlaying);
+		// pApp.println("Stop VIDEO" + isVideoPlaying);
 
 		curMovie.stop();
 		} catch (Exception e){

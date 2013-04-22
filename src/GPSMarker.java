@@ -29,10 +29,10 @@ public class GPSMarker {
 	int fillColorB = 0;
 	
 	
-	int size1 = 12;
-	int size2 = 6;
+	int size1 = 35;
+	int size2 = 12;
 	
-	int setSize = 12;
+	int setSize = 35;
 	
 	int theID;
 	

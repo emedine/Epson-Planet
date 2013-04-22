@@ -105,6 +105,9 @@ public class EpsonPlanet extends PApplet {
 
 	//Camera rotation vector
 	private final Vec3D camRot = new Vec3D();
+	
+	//Destroyer rotation vector
+	private final Vec3D desRot = new Vec3D();
 	// is moving
 	private boolean isMoving = false;
 	//Zoom factors
@@ -416,8 +419,8 @@ public class EpsonPlanet extends PApplet {
 			
 			//// init the destroyer
 			//// placeholder lat and long
-			float lt = new Float(34.024704);
-			float lo = new Float(-84.5033);
+			float lt = new Float(4.6);
+			float lo = new Float(-74.0833);
 			
 			try {
 			theDestroyer = new Destroyer(lo, lt);
@@ -579,11 +582,22 @@ public class EpsonPlanet extends PApplet {
 		if (!mousePressed) {
 			// println("Do mouse Y " + mouseY);
 	    	// println("Do cursor X " + mouseX);
-			theLat = map(mouseY, 0, screenHeight, 0, 90);
-			theLong = map(mouseX, 0, screenWidth, -180, 180);
+			// theLat = map(mouseY, 0, screenHeight, 0, 90);
+			// theLong = map(mouseX, 0, screenWidth, -180, 180);
+			desRot.interpolateToSelf(new Vec3D(mouseX * 0.51f, mouseY * 0.51f, 0),0.25f / currZoom);
+			theLat = desRot.y; // map(mouseY, 0, screenHeight, 0, 90);
+			theLong = desRot.x; // map(mouseX, 0, screenWidth, -180, 180);
+			
 		}
 		doCursor = false;
 		
+		/*
+		 * theCamX = camRot.x;
+			theCamY = camRot.y;
+			*/
+		
+		// 
+
 		theDestroyer.setSpherePosition(theLong, theLat); 
 		theDestroyer.computePosOnSphere(EARTH_RADIUS);
 
@@ -591,19 +605,26 @@ public class EpsonPlanet extends PApplet {
 		boolean isPopupVisible = false;
 		for(int i=0; i<GPSArray.size(); i++){
 		// for(int i=0; i<2; i++){
+			
+			/// DESTROYER LAT AND LONG
 			float dlat = theDestroyer.theLat;
-			float dlong = theDestroyer.theLong;
-			float mlat = GPSArray.get(i).theLat;
+			float dlong = theDestroyer.theLong; //theDestroyer.theLat;
+			
+			//// MARKER LAT AND LONG
+			float mlat = GPSArray.get(i).theLat;  
 			float mlong = GPSArray.get(i).theLong;
 			// println("dlat " + dlat + " mlat: " + mlat);
 			// println("dlong " + dlong + " mlong: " + mlong);
 			//// check to see if the destroyer is within the range of the current lat and long
 			/// if (dlat >= (mlat -1) && dlat <= (mlat + 1) &&  dlong <= (mlong + 1) && dlong >= (mlong - 1)){
-			if (dlat >= (mlat -2) && dlat <= (mlat + 2) &&  dlong <= (mlong + 2) && dlong >= (mlong - 2)){
-				GPSMarker tMark = GPSArray.get(i);
-				
-				 //// marker hit
+			
+			
+			//// TRY CHECKING THE POS INSTEAD OF LAT AND LONG
+			GPSMarker tMark = GPSArray.get(i);
+			if(theDestroyer.pos.y <= (tMark.pos.y + 10) && theDestroyer.pos.y >= (tMark.pos.y -10) && theDestroyer.pos.x <= (tMark.pos.x + 10) && theDestroyer.pos.x >= (tMark.pos.x -10) ){
 				tMark.doHit();
+				println("I AM HIT: " + tMark.theID);
+				
 				 //// init popup data
 				thePopUp.theName = "";
 				thePopUp.theText = "";
@@ -622,7 +643,39 @@ public class EpsonPlanet extends PApplet {
 					curID = tMark.theID;
 				} 
 				
-				////
+				//// if no popups are visible, make sure to 
+				//// stop all video
+				thePopUp.drawPopup(tMark.theID);
+				isPopupVisible = true;
+				
+			}
+			/*
+			if (dlat >= (mlat -2) && dlat <= (mlat + 2) &&  dlong <= (mlong + 2) && dlong >= (mlong - 2)){
+				GPSMarker tMark = GPSArray.get(i);
+				
+				 //// marker hit
+				tMark.doHit();
+				
+				 //// init popup data
+				thePopUp.theName = "";
+				thePopUp.theText = "";
+				
+				thePopUp.theName = nameList.get(tMark.theID);
+				thePopUp.theText = blurbList.get(tMark.theID);
+				// thePopUp.theVideoPath = videoPathList.get(tMark.theID);
+				
+			    //// showing popup data
+				/// test to see if we're playing a different video than before
+				if(curID != tMark.theID){
+					println("Cur ID: " + curID + " new ID: " + tMark.theID);
+					/// if so, stop current, switch, then wait for start
+					thePopUp.stopVideo();
+					thePopUp.switchCurVideo(tMark.theID);
+					curID = tMark.theID;
+				} 
+				
+				//// if no popups are visible, make sure to 
+				//// stop all video
 				thePopUp.drawPopup(tMark.theID);
 				isPopupVisible = true;
 				
@@ -630,8 +683,9 @@ public class EpsonPlanet extends PApplet {
 				/// println(">>");
 				// thePopUp.isVisible = false;
 			}
-		
+		*/
 		}
+		
 		if(isPopupVisible == false){
 			thePopUp.stopVideo();
 		}
