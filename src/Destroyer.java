@@ -1,7 +1,6 @@
 // package src;
 
-import processing.core.PApplet;
-import processing.core.PShape;
+import processing.core.*;
 import toxi.geom.Vec2D;
 import toxi.geom.Vec3D;
 import toxi.math.MathUtils;
@@ -17,7 +16,12 @@ public class Destroyer {
 	public float theLong;
 	public float theLat;
 	public float theRotation = 0;
-
+	
+	int rotCounter=0;
+	
+	PFont readoutFont;
+	PFont readoutFontSm;
+	PFont readoutFontM;
 	// 
 	DataProfile theDataProfile;
 	PApplet pApp;
@@ -33,6 +37,10 @@ public class Destroyer {
 		this.gps = new Vec2D(tLong, tLat);
 		theDataProfile = theDataProfile.getInstance();
 		pApp = theDataProfile.pApp;
+		
+		readoutFont = pApp.createFont("Arial",14, true); /// normal fonts
+		readoutFontM = pApp.createFont("Arial",12, true); /// med fonts
+		readoutFontSm = pApp.createFont("Arial",10, true); /// sm fonts
 
 
 	}
@@ -68,41 +76,47 @@ public class Destroyer {
 		  int theAlpha = Math.round(rnd2*255);
 		   */
 		  if (isVisible) {
-			  int lineWidth = 30;
+			  int lineWidth = 60;
 			  int tSpacing = 5;
 			  pApp.fill(255);
+			  
 			/// do numbers
-			  pApp.text(theLong, screenPos.x + 8, screenPos.y + 23);
-			  pApp.text(" " + theLat, screenPos.x + 8, screenPos.y + 33);
+			  pApp.textFont(readoutFontSm);
+			  pApp.text(theLong, screenPos.x + lineWidth/1.5f, screenPos.y + 15);
+			  pApp.textFont(readoutFontM);
+			  pApp.text(theLong - theLat, screenPos.x + lineWidth/2, screenPos.y + 30);
+			  pApp.textFont(readoutFont);
+			  pApp.text(theLat, screenPos.x + 5, screenPos.y + 45);
 			  
 			  pApp.fill(0);
 			  pApp.stroke(255);
-			  pApp.strokeWeight(1);
+			  pApp.strokeWeight(2);
 				
-				/// trim x
-				pApp.line(screenPos.x, screenPos.y - tSpacing, screenPos.x + lineWidth/2, screenPos.y -tSpacing);
-				pApp.line(screenPos.x, screenPos.y + tSpacing, screenPos.x + lineWidth/2, screenPos.y + tSpacing);
-				pApp.ellipse(screenPos.x, screenPos.y, lineWidth/2, lineWidth/2);
-				
-				/// crosshair
-				pApp.fill(0,0,0,0);
-				pApp.stroke(255);
-				// do horiz
-				pApp.line(screenPos.x-lineWidth/2, screenPos.y, screenPos.x + lineWidth, screenPos.y);
-				/// do vert
-				pApp.line(screenPos.x, screenPos.y-lineWidth/2, screenPos.x, screenPos.y + lineWidth);
-				// do circle
-				// pApp.ellipse(screenPos.x-lineWidth, screenPos.y-lineWidth, lineWidth/2, lineWidth/2);
-				// pApp.ellipse(screenPos.x-lineWidth/2, screenPos.y-lineWidth/2, lineWidth/2, lineWidth/2);
-				pApp.ellipse(screenPos.x, screenPos.y, lineWidth, lineWidth);
-				//*/
-				
+			/// trim x
+			pApp.line(screenPos.x, screenPos.y - tSpacing, screenPos.x + lineWidth/2, screenPos.y -tSpacing);
+			pApp.line(screenPos.x, screenPos.y + tSpacing, screenPos.x + lineWidth/2, screenPos.y + tSpacing);
+			pApp.ellipse(screenPos.x, screenPos.y, lineWidth/2, lineWidth/2);
+
+			/// crosshair
+			pApp.fill(0,0,0,0);
+			pApp.stroke(255);
+			// do horiz
+			pApp.line(screenPos.x-lineWidth/2, screenPos.y, screenPos.x + lineWidth, screenPos.y);
+			/// do vert
+			pApp.line(screenPos.x, screenPos.y-lineWidth/2, screenPos.x, screenPos.y + lineWidth/1.75f);
+			// do circle
+			// pApp.ellipse(screenPos.x-lineWidth, screenPos.y-lineWidth, lineWidth/2, lineWidth/2);
+			// pApp.ellipse(screenPos.x-lineWidth/2, screenPos.y-lineWidth/2, lineWidth/2, lineWidth/2);
+			pApp.ellipse(screenPos.x, screenPos.y, lineWidth, lineWidth);
+			//*/
+			
 				
 			    // thePoly.doPolygon(app, 5, screenPos.x, screenPos.y, 12, 12, theAlpha, fillColor);
 		  } else {
 			  // thePoly.doPolygon(app, 3, screenPos.x, screenPos.y, 8, 8, 125, fillColor);
 		  }
 		 /// thePoly.rotate(pApp.radians(theRotation));
+		 
 	}
 	
 	//// toggles visibility from the interface

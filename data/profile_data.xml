@@ -2,23 +2,23 @@
 <profileData version="1.0">
    <profile>
 	  <name>ARGENTINA</name>
-	  <title>EPSON VENEZUELA, SRL.</title>
+	  <Name>EPSON ARGENTINA, SRL.</Name>
 	  <blurb>Mercedes Bonini (Daughter of Epson Employee, Adriana Banar), Adriana Banar, Gerente Regional de Relaciones Públicas de Epson </blurb>
 	  <video >../video/EpsonVignettes1.mov</video>
-	  <latitude>10.5</latitude>
-	  <longitude>-66.9167</longitude>
+	  <latitude>-34.5875</latitude>
+	  <longitude>-58.6725</longitude>
 	  <address>Calle 4 Con Calle 11-1
 EDF. Epson - La Urbina Sur
-Caracas, VENEZUELA</address>
+Caracas, ARGENTINA</address>
   </profile>
   
   <profile>
 	  <name>BRASIL</name>
-	  <title>EPSON BRASIL</title>
+	  <Name>EPSON BRASIL</Name>
 	  <blurb>1- Elaine Santos Silva (Wife of Danilo de Oliveira), Danilo de Oliveira
-Worker (Info to be verified), 2-  Elizabeth Pedraçoli Caldatto (Mother of Eduardo Caldatto)
+Worker (Info to be verified), 2- Elizabeth Pedraçoli Caldatto (Mother of Eduardo Caldatto)
 Daiane Pedraçoli Caldatto, (Sister of Eduardo Caldatto), Eduardo Caldatto, Worker (Info to be verified)</blurb>
-	  <video>../video/cinetweet_demo320x240PJPG.mov</video>
+	  <video>../video/EpsonVignettes3.mov</video>
 	  <latitude>-22.9</latitude>
 	  <longitude>-43.2333</longitude>
 	  <address>Av. Canaval Y Moreyra 590
@@ -27,10 +27,10 @@ LIMA, 27 PERU</address>
   
   <profile>
 	  <name>COLOMBIA</name>
-	 <title>EPSON COLOMBIA</title>
+	 <Name>EPSON COLOMBIA</Name>
 	  <blurb>1- video, Catalina Salguero (Wife of Francisco Valderrama), Francisco Valderrama, Gerente General de Epson Colombia 
 </blurb>
-	  <video>../video/station.mov</video>
+	  <video>../video/EpsonVignettes2.mov</video>
 	  <latitude>4.6</latitude>
 	  <longitude>-74.0833</longitude>
 	  <address>Boulevard Manual Avila Camacho 389
@@ -41,9 +41,9 @@ MEXICO, D.F.</address>
   
   <profile>
 	  <name>CHILE</name>
-	 <title>EPSON CHILE</title>
-	  <blurb>The names "Richard Roe" for males, "JRichard Roe" or "Richard RoeThe names are also used to refer to a corpse or hospital patient whose identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context originates. The name Joe Bloggs is used in the UK instead,[citation needed] as well as in Australia and New Zealand.</blurb>
-	  <video>../video/station.mov</video>
+	 <Name>EPSON CHILE</Name>
+	  <blurb></blurb>
+	  <video>../video/EpsonVignettes3.mov</video>
 	  <latitude>-33.45</latitude>
 	  <longitude>-70.6667</longitude>
 	  <address>Calle 100 No 21-64 PISO
@@ -52,9 +52,9 @@ Bogota, COLOMBIA</address>
   
   <profile>
 	  <name>CENTROAMERICA</name>
-	 <title>EPSON CENTROAMERICA</title>
+	 <Name>EPSON CENTROAMERICA</Name>
 	  <blurb>1 video, Natalia Vargas ose Pablo Rodriguez Gerente de Producto-SDIDM </blurb>
-	  <video>../video/station.mov</video>
+	  <video>../video/EpsonVignettes0.mov</video>
 	  <latitude>10.05</latitude>
 	  <longitude>-84.1167</longitude>
 	  <address>La Concepcion 322, Piso 3 Providencia, Santiago CHILE</address>
@@ -62,37 +62,22 @@ Bogota, COLOMBIA</address>
   
     <profile>
 	  <name>ECUADOR</name>
-	 <title>EPSON ECUADOR</title>
-	  <blurb>1- 
-Carlos Enrique Aguirre Moreno (Husband of Karinna Riofrio) 
-Carlos Daniel Aguirre Riofrio (Son of Karinna RioFrio) 
-Cayetano Nicolás Aguirre Riofrio (Son of Karinna RioFrio) 
-Karinna Riofrio 
-Gerente de Epson Ecuador 
-2- Gustavo Xavier Jaramillo González (Son of Ana Maria Gonzalez) 
-Ana Maria Gonzalez 
-Gerente de Ventas </blurb>
-	  <video>../video/station.mov</video>
+	 <Name>EPSON ECUADOR</Name>
+	  <blurb>1- Carlos Enrique Aguirre Moreno (Husband of Karinna Riofrio), Carlos Daniel Aguirre Riofrio (Son of Karinna RioFrio), Cayetano Nicolás Aguirre Riofrio (Son of Karinna RioFrio), Karinna Riofrio, Gerente de Epson Ecuador 
+2-Gustavo Xavier Jaramillo González (Son of Ana Maria Gonzalez), Ana Maria Gonzalez, Gerente de Ventas </blurb>
+	  <video>../video/EpsonVignettes0.mov</video>
 	  <latitude>-0.2167</latitude>
 	  <longitude>-78.5</longitude>
-	  <address>Av. Tucunare, 720
-Tambore Barueri
-Sao Paulo, SP 06460-020
-BRASIL</address>
+	  <address>Av. Tucunare, 720 Tambore Barueri Sao Paulo, SP 06460-020 </address>
   </profile>
   
     <profile>
 	  <name>LONG BEACH</name>
-	 <title>EPSON LONG BEACH</title>
-	  <blurb>1- 
-Fernando Urteaga (Son of Fernando Urteaga)
-Valentina Urteaga (Daughter of Fernando Urteaga)
-Fernando UrteagaGerente de Producto Regional de Impresoras de Gran Formato2-
-Gerardina Miele (Wife of Gerardo Gordon)
-Gerardo Gordon
-Gerente de Producto Regional de IJP
+	 <Name>EPSON LONG BEACH</Name>
+	  <blurb>1- Fernando Urteaga (Son of Fernando Urteaga), Valentina Urteaga (Daughter of Fernando Urteaga), Fernando UrteagaGerente de Producto Regional de Impresoras de Gran Formato 
+	  2-Gerardina Miele (Wife of Gerardo Gordon), Gerardo Gordon, Gerente de Producto Regional de IJP
 </blurb>
-	  <video>../video/station.mov</video>
+	  <video>../video/EpsonVignettes1.mov</video>
 	  <latitude>51.5002</latitude>
 	  <longitude>-0.12620544</longitude>
 	  <address>TBD</address>
@@ -100,15 +85,11 @@ Gerente de Producto Regional de IJP
   
       <profile>
 	  <name>PERU</name>
-	 <title>EPSON PERU</title>
-	  <blurb> 1-
-Ivan Valdez (Husband of Paola Medrano)
-Paola Medrano Servicio  (still need to verify this info)
-2-Iris Verónica Santoyo Noguera (Wife of Paul Cesar Morales)
-Paul Cesar Morales
-Contador (still need to verify this info)
+	 <Name>EPSON PERU</Name>
+	  <blurb> 1- Ivan Valdez (Husband of Paola Medrano) Paola Medrano Servicio  (still need to verify this info)
+2-Iris Verónica Santoyo Noguera (Wife of Paul Cesar Morales) Paul Cesar Morales Contador (still need to verify this info)
 </blurb>
-	  <video>../video/station.mov</video>
+	  <video>../video/EpsonVignettes2.mov</video>
 	  <latitude>-12.05</latitude>
 	  <longitude>-77.05</longitude>
 	  <address>TBD</address>
@@ -116,13 +97,10 @@ Contador (still need to verify this info)
   
       <profile>
 	  <name>MEXICO</name>
-	 <title>EPSON MEXICO</title>
-	  <blurb>1- 
-Martha Galvez (Wife of Guillermo Reyna) 
-Guillermo Reyna Gerente de Ventas al Canal 2nd Tier 
-2- Yolanda Navarro (Wife of Mauricio Cano) 
-Mauricio Cano Diseñador Gráfico de Epson Mexico </blurb>
-	  <video>../video/station.mov</video>
+	 <Name>EPSON MEXICO</Name>
+	  <blurb>1- Martha Galvez (Wife of Guillermo Reyna), Guillermo Reyna Gerente de Ventas al Canal 2nd Tier 
+2- Yolanda Navarro (Wife of Mauricio Cano), Mauricio Cano Diseñador Gráfico de Epson Mexico </blurb>
+	  <video>../video/EpsonVignettes3.mov</video>
 	  <latitude>19.4342</latitude>
 	  <longitude>-99.1386</longitude>
 	  <address>TBD</address>
@@ -130,14 +108,12 @@ Mauricio Cano Diseñador Gráfico de Epson Mexico </blurb>
   
   <profile>
 	  <name>VENEZUELA</name>
-	 <title>EPSON MEXICO</title>
-	  <blurb>1- 
-		1- video
-		Martha Reimpell (Daughter of Pablo Reimpell) 
+	 <Name>EPSON VENEZUELA</Name>
+	  <blurb>Martha Reimpell (Daughter of Pablo Reimpell) 
 		Arelis Sierra (Wife of Pablo Reimpell)  Pablo Reimpell 
 		Director de Operaciones 
 		</blurb>
-	  <video>../video/station.mov</video>
+	  <video>../video/EpsonVignettes0.mov</video>
 	  <latitude>10.5</latitude>
 	  <longitude>-66.9167</longitude>
 	  <address>TBD</address>

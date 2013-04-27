@@ -39,9 +39,6 @@ import codeanticode.gsvideo.GSMovie;
 /// osc stuff
 import oscP5.*;
 
-// import src.SawWave;
-// import netP5.*;
-
 /// processing core libraries
 import processing.core.*;
 import processing.xml.XMLElement;
@@ -53,10 +50,6 @@ import toxi.geom.mesh.SphereFunction;
 import toxi.geom.mesh.SurfaceMeshBuilder;
 import toxi.processing.ToxiclibsSupport;
 
-
-//twitter libraries
-
-//java libraries
 
 /*
  * <ul>
@@ -74,17 +67,18 @@ public class EpsonPlanet extends PApplet {
 	/**
 	 * Main entry point to run as application
 	 */
-/*
+	///*
 	public static void main(String[] args) {
 		PApplet.main(new String[] { "--present", "EpsonPlanet" });
 		// PApplet.main(new String[] {"EpsonPlanet" });
 	}
 	
-	*/
+	//*/
 	/*
 	int screenWidth = 1440;
 	int screenHeight = 900;
 	// */
+	
 	
 	int screenWidth = 1024;
 	int screenHeight = 768;
@@ -153,13 +147,13 @@ public class EpsonPlanet extends PApplet {
 	
 	
 	///// COLORS
-	int bgColorR = 165;
-	int bgColorG = 165;
-	int bgColorB = 165;
+	int bgColorR = 0;
+	int bgColorG = 0;
+	int bgColorB = 0;
 	
 	//// bgrounds
 	PImage bgImage;
-	String bgPathImagePath = "../data/parchment_bgroundBLK.png";
+	// String bgPathImagePath = "../data/parchment_bgroundBLK.png";
 	
 
 	// / PApplet stuff
@@ -196,27 +190,23 @@ public class EpsonPlanet extends PApplet {
 	DataProfile dataProfile;
 	
 	
+	///////// CHROMELESS CONFIGURATION
+	public void init() {
+        if(frame!=null){
+          frame.removeNotify();//make the frame not displayable
+          frame.setResizable(true);
+          frame.setUndecorated(true);
+          println("frame is at "+frame.getLocation());
+          frame.addNotify();
+        }
+      super.init();
+  }
+	
 	//// POPUP WINDOW
 	PopupObject thePopUp;
 	int videoCounter = 0; /// current video
 	boolean isVideoPlaying = false;
 	
-	
-	/*
-	public void init() {
-		  /// to make a frame not displayable, you can
-		  // use frame.removeNotify()
-		  frame.removeNotify(); 
-
-		  frame.setUndecorated(true);
-
-		  // addNotify, here i am not sure if you have
-		  // to add notify again.
-		  // frame.addNotify();
-		  super.init();
-	}
-	*/
-
 	public void setup() {
 		// size(1024, 768);
 		/// size(1024, 768, P2D);
@@ -227,9 +217,10 @@ public class EpsonPlanet extends PApplet {
 		smooth();
 		
 		// load earth texture image
-		earthTex = loadImage("../data/earth_4096.jpg"); //../data/earth_outlines.jpg"); //
+		// earthTex = loadImage("../data/earth_4096.jpg"); 
+		earthTex = loadImage("../data/earth_4096_blue.jpg");  //../data/earth_outlines.jpg"); //
 		// earthTex = loadImage("../data/earth_outlines.png");
-		bgImage = loadImage(bgPathImagePath);
+		// bgImage = loadImage(bgPathImagePath);
 
 		// build a sphere mesh with texture coordinates
 		// sphere resolution set to 36 vertices
@@ -253,6 +244,8 @@ public class EpsonPlanet extends PApplet {
 		dataProfile.pApp = this; 
 		
 		/// init the popup object
+		/// wait to parse the XML
+		/// before initializing the video
 		thePopUp = new PopupObject();
 		
 		//// LOAD XML ///////
@@ -264,25 +257,25 @@ public class EpsonPlanet extends PApplet {
 	public void draw() {
 
 		background(bgColorR, bgColorG, bgColorB);
-		image(bgImage, 512, 384);
+		// image(bgImage, 512, 384);
 		
 
 		renderGlobe();
 		
-		/*
+		//*
 		if(thePopUp.isVideoPlaying == true){
 		   // thePopUp.playVideo();
 			// println("LAYING VIDEO" + thePopUp.isVideoPlaying);
 		   thePopUp.drawVideo();
 		 }
 		
-		*/
+		//*/
 		
 
 	}
 	
 	////////////////////////////////////////////////////////
-	///////// FOR SOME REASON THIS HAS TO BE IN MAIN
+	///////// FOR SOME REASON MOVIE EVENT HAS TO BE IN MAIN
 	////////////////////////////////////////////////////////
 	public void movieEvent(GSMovie curMovie) {
 		  thePopUp.curMovie.read();  
@@ -324,29 +317,29 @@ public class EpsonPlanet extends PApplet {
 			XMLElement profile = xmlFeed.getChild(i);
 			///* 
 			try{
-				nameList.add(profile.getChild(0).getContent());
+				nameList.add(profile.getChild(1).getContent());
 				blurbList.add(profile.getChild(2).getContent());
 				videoPathList.add(profile.getChild(3).getContent());
 				thePopUp.videoPath.add(profile.getChild(3).getContent());
 				latList.add(profile.getChild(4).getContent());
 				longList.add(profile.getChild(5).getContent());
 				
-				pApp.println("Title = " + i + profile.getChild(0).getContent());
-				pApp.println("message = " + i + profile.getChild(1).getContent());
-				pApp.println("blurb = " + i + profile.getChild(2).getContent());
-				pApp.println("video = " + i + profile.getChild(3).getContent());
-				pApp.println("lat = " + i + profile.getChild(4).getContent());
-				pApp.println("long = " + i + profile.getChild(5).getContent());
+				pApp.println("Title= " + profile.getChild(0).getContent());
+				pApp.println("Name= " + profile.getChild(1).getContent());
+				pApp.println("Blurb= " + profile.getChild(2).getContent());
+				// pApp.println("video = " +  profile.getChild(3).getContent());
+				pApp.println("Address = " + profile.getChild(4).getContent());
+				// pApp.println("long = " + profile.getChild(5).getContent());
+				//pApp.println(" ");
+				pApp.println(" ");
 			} catch (Exception e){
 				println("XML init error: " + e);
 			}
 			
 		
 		}
-		
-		//// now that we know what the video paths are
-		//// init the video in the popup window
-		// thePopUp.initVideo();
+		/// now that the popup video array has data, init the video
+		thePopUp.initVideo();
 		/// convert the lat and long string to floats
 		initLocations();
 
@@ -392,7 +385,7 @@ public class EpsonPlanet extends PApplet {
 		private void initMarkers() {
 
 			for (int i = 0; i< latList.size(); i++){
-				println("ADDING MARKER: " + i);
+				
 				// theMarker = new GPSMarker(lo,lt);
 				theMarker = new GPSMarker(longArray[i], latArray[i]);
 				theMarker.computePosOnSphere(EARTH_RADIUS);
@@ -515,7 +508,10 @@ public class EpsonPlanet extends PApplet {
 			GPSArray.get(i).updateScreenPos(this, camPos);
 		}
 		// check destroyer position
-		theDestroyer.updateScreenPos(this, camPos);
+		if(isVideoPlaying == false){
+			//if(thePopUp.isVideoPlaying == true){
+			theDestroyer.updateScreenPos(this, camPos);
+		}
 		
 		/////////////////////////////////////////
 		// switch back to 2D coordinate system
@@ -528,7 +524,7 @@ public class EpsonPlanet extends PApplet {
 
 		// now that they're in position, draw them
 		for (int i = 0; i < GPSArray.size(); i++) {
-			GPSArray.get(i).drawAsImage(this, IMG_SIZE * currZoom * 0.9f, showLabels);
+			GPSArray.get(i).drawAsImage(IMG_SIZE * currZoom * 0.9f, showLabels);
 		}
 		// draw the destroyer
 		try{
@@ -562,17 +558,12 @@ public class EpsonPlanet extends PApplet {
 			float newOscY = map(oscY1, 0, 1, 0, screenHeight);
 			float newOscX = map(oscX1, 0, 1, 0, screenWidth);
 	    	
-			/// change mouse-style to 360 degree values
-			theLat = map(newOscY, 0, screenHeight, 0, 90);
-			theLong = map(newOscX, 0, screenWidth, -180, 180);
+		
+			desRot.interpolateToSelf(new Vec3D(newOscX * 0.51f, newOscY * 0.51f, 0),0.25f / currZoom);
+			theLat = desRot.y; // map(mouseY, 0, screenHeight, 0, 90);
+			theLong = desRot.x; // map(mouseX, 0, screenWidth, -180, 180);
 			
-			/*
-	    	println("Do cursor Y " + oscY1);
-	    	println("Do cursor X " + oscX1);
-	    	
-	    	println("Do LONG Y " + theLong);
-	    	println("Do LAT X " + theLat);
-	    	*/
+			
 
 		} else {
 			// theLat = map(mouseY, 600, 0, 0, 90);
@@ -580,13 +571,12 @@ public class EpsonPlanet extends PApplet {
 		
 		}
 		if (!mousePressed) {
-			// println("Do mouse Y " + mouseY);
-	    	// println("Do cursor X " + mouseX);
-			// theLat = map(mouseY, 0, screenHeight, 0, 90);
-			// theLong = map(mouseX, 0, screenWidth, -180, 180);
+			
+			///*
 			desRot.interpolateToSelf(new Vec3D(mouseX * 0.51f, mouseY * 0.51f, 0),0.25f / currZoom);
 			theLat = desRot.y; // map(mouseY, 0, screenHeight, 0, 90);
 			theLong = desRot.x; // map(mouseX, 0, screenWidth, -180, 180);
+			//*/
 			
 		}
 		doCursor = false;
@@ -619,12 +609,13 @@ public class EpsonPlanet extends PApplet {
 			/// if (dlat >= (mlat -1) && dlat <= (mlat + 1) &&  dlong <= (mlong + 1) && dlong >= (mlong - 1)){
 			
 			
-			//// TRY CHECKING THE POS INSTEAD OF LAT AND LONG
+			//// CHECK INTERSECTION of MARKER AND DESTROYER
 			GPSMarker tMark = GPSArray.get(i);
 			if(theDestroyer.pos.y <= (tMark.pos.y + 10) && theDestroyer.pos.y >= (tMark.pos.y -10) && theDestroyer.pos.x <= (tMark.pos.x + 10) && theDestroyer.pos.x >= (tMark.pos.x -10) ){
-				tMark.doHit();
-				println("I AM HIT: " + tMark.theID);
 				
+				
+				tMark.doHit();
+
 				 //// init popup data
 				thePopUp.theName = "";
 				thePopUp.theText = "";
@@ -633,62 +624,25 @@ public class EpsonPlanet extends PApplet {
 				thePopUp.theText = blurbList.get(tMark.theID);
 				// thePopUp.theVideoPath = videoPathList.get(tMark.theID);
 				
-			    //// showing popup data
-				/// test to see if we're playing a different video than before
+			    
+				/// swtich video if it's different than the current
 				if(curID != tMark.theID){
 					println("Cur ID: " + curID + " new ID: " + tMark.theID);
-					/// if so, stop current, switch, then wait for start
+					/// stop current, switch
 					thePopUp.stopVideo();
 					thePopUp.switchCurVideo(tMark.theID);
 					curID = tMark.theID;
 				} 
-				
-				//// if no popups are visible, make sure to 
-				//// stop all video
+
+			//// showing popup data
 				thePopUp.drawPopup(tMark.theID);
 				isPopupVisible = true;
 				
 			}
-			/*
-			if (dlat >= (mlat -2) && dlat <= (mlat + 2) &&  dlong <= (mlong + 2) && dlong >= (mlong - 2)){
-				GPSMarker tMark = GPSArray.get(i);
-				
-				 //// marker hit
-				tMark.doHit();
-				
-				 //// init popup data
-				thePopUp.theName = "";
-				thePopUp.theText = "";
-				
-				thePopUp.theName = nameList.get(tMark.theID);
-				thePopUp.theText = blurbList.get(tMark.theID);
-				// thePopUp.theVideoPath = videoPathList.get(tMark.theID);
-				
-			    //// showing popup data
-				/// test to see if we're playing a different video than before
-				if(curID != tMark.theID){
-					println("Cur ID: " + curID + " new ID: " + tMark.theID);
-					/// if so, stop current, switch, then wait for start
-					thePopUp.stopVideo();
-					thePopUp.switchCurVideo(tMark.theID);
-					curID = tMark.theID;
-				} 
-				
-				//// if no popups are visible, make sure to 
-				//// stop all video
-				thePopUp.drawPopup(tMark.theID);
-				isPopupVisible = true;
-				
-			} else {
-				/// println(">>");
-				// thePopUp.isVisible = false;
-			}
-		*/
+
 		}
 		
-		if(isPopupVisible == false){
-			thePopUp.stopVideo();
-		}
+		
 
 	}
 
@@ -709,18 +663,18 @@ public class EpsonPlanet extends PApplet {
 		/// we have to check for init OSC values
 		/// so the mouse doesn't override it on 
 		/// globe and cursor postion
-		if(addr.indexOf("/TwitterPlanet/xy1") !=-1){ 
+		if(addr.indexOf("/EpsonPlanet/xy1") !=-1){ 
 			hasOsc = true;
 			println(hasOsc);
 		}
-		if(addr.indexOf("/TwitterPlanet/xy2") !=-1){ 
+		if(addr.indexOf("/EpsonPlanet/xy2") !=-1){ 
 			hasOsc = true;
 			println(hasOsc);
 		}
 		
 		
 		if(theOscMessage.checkTypetag("i")) {
-			 if(addr.equals("/TwitterPlanet/fader1")){ 
+			 if(addr.equals("/EpsonPlanet/fader1")){ 
 			   int valI = theOscMessage.get(0).intValue();
 			   
 			 } 
@@ -734,12 +688,12 @@ public class EpsonPlanet extends PApplet {
 			// hasOsc == true
 			println("FF type: " + val0 + " " + val1);
 			try {
-			   if(addr.equals("/TwitterPlanet/xy1")){ 
+			   if(addr.equals("/EpsonPlanet/xy1")){ 
 			    	println("Do globe " + val0);
 			    	oscX0 = new Float(val0);
 			    	oscY0 = new Float(val1);
 			    }
-			    else if(addr.equals("/TwitterPlanet/xy2")){ 
+			    else if(addr.equals("/EpsonPlanet/xy2")){ 
 			    	float val2 = theOscMessage.get(0).floatValue();
 					float val3 = theOscMessage.get(1).floatValue();
 			    	doCursor = true;
@@ -761,7 +715,7 @@ public class EpsonPlanet extends PApplet {
 			try{
 			
 			 // println(" VALUE 0: "+theOscMessage.get(0).floatValue());
-			   if(addr.equals("/TwitterPlanet/fader1")){ 
+			   if(addr.equals("/EpsonPlanet/fader1")){ 
 				   // targetZoom = max(targetZoom - 0.1f, 0.5f);
 				   // targetZoom = min(targetZoom + 0.1f, 1.9f);
 				   float val0 = theOscMessage.get(0).floatValue();
@@ -775,12 +729,12 @@ public class EpsonPlanet extends PApplet {
 			    else if(addr.equals("/1/xy1")){ 
 			    	
 			    }
-			    else if(addr.equals("/TwitterPlanet/toggle1")){ 
+			    else if(addr.equals("/EpsonPlanet/toggle1")){ 
 			    	println("toggle visibility");
 			    	theDestroyer.toggleVisibility();
 			    	
 			    }
-			    else if(addr.equals("/TwitterPlanet/toggle2")){ 
+			    else if(addr.equals("/EpsonPlanet/resetGlobeButt")){ 
 			    	println("reset position");
 			    	theCamX = defaultCamX; 
 			    	theCamY = defaultCamY;
@@ -788,17 +742,28 @@ public class EpsonPlanet extends PApplet {
 
 			    	
 			    }
-			    else if(addr.equals("/TwitterPlanet/rotary1")){ 
+			    else if(addr.equals("/EpsonPlanet/playVidButt")){ 
+			    	println("play vid");
+			    	thePopUp.startVideo();
+			    	
+			    }
+			    else if(addr.equals("/EpsonPlanet/stopVidButt")){ 
+			    	println("pause vid");
+			    	thePopUp.stopVideo();
+
+			    	
+			    }
+			    else if(addr.equals("/EpsonPlanet/rotary1")){ 
 			    	int v = parseInt(theOscMessage.get(0).floatValue());
 			    	println("R: " + v + " " + str0);
 			    	bgColorR = v;
 			    }
-			    else if(addr.equals("/TwitterPlanet/rotary2")){ 
+			    else if(addr.equals("/EpsonPlanet/rotary2")){ 
 			    	int v = parseInt(theOscMessage.get(0).floatValue());
 			    	println("G: " + v + " " + str0);
 			    	bgColorG = v;
 			    }
-			    else if(addr.equals("/TwitterPlanet/rotary3")){ 
+			    else if(addr.equals("/EpsonPlanet/rotary3")){ 
 			    	int v = parseInt(theOscMessage.get(0).floatValue());
 			    	println("B: " + v + " " + str0);
 			    	bgColorB = v;
@@ -816,7 +781,10 @@ public class EpsonPlanet extends PApplet {
 		  /// control x and y destroyer
 	}
 
+	///////////////////////////////
 	//////// keyboard input
+	///////////////////////////////
+	
 	public void keyPressed() {
 		if (key == '-') {
 			targetZoom = max(targetZoom - 0.1f, 0.5f);
@@ -832,8 +800,6 @@ public class EpsonPlanet extends PApplet {
 			
 		}
 		if(key == 't'){
-			println("SWITCH< BITCHES");
-			//*
 
 			thePopUp.videoCounter ++;
 			if(thePopUp.videoCounter >= thePopUp.videoPath.size()){
@@ -857,6 +823,8 @@ public class EpsonPlanet extends PApplet {
 			thePopUp.stopVideo();
 		}
 	}
+	
+	// pApp.init();
 	
 
 	// /

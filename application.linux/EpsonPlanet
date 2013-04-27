@@ -1,0 +1,4 @@
+#!/bin/sh
+
+APPDIR=$(dirname "$0")
+java -d32 -Djava.library.path="$APPDIR" -cp "$APPDIR/lib/EpsonPlanet.jar:$APPDIR/lib/flickrapi-1.2.jar:$APPDIR/lib/toxiclibs_p5.jar:$APPDIR/lib/toxiclibscore.jar:$APPDIR/lib/colorutils.jar:$APPDIR/lib/gluegen-rt.jar:$APPDIR/lib/jogl.jar:$APPDIR/lib/opengl.jar:$APPDIR/lib/jsminim.jar:$APPDIR/lib/mp3spi1.9.4.jar:$APPDIR/lib/tritonus_aos.jar:$APPDIR/lib/tritonus_share.jar:$APPDIR/lib/jl1.0.jar:$APPDIR/lib/oscP5.jar:$APPDIR/lib/core.jar:$APPDIR/lib/gstreamer-java.jar:$APPDIR/lib/GSVideo.jar:$APPDIR/lib/jna.jar"EpsonPlanet

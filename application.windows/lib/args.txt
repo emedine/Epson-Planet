@@ -1,0 +1,3 @@
+-d32
+EpsonPlanet
+EpsonPlanet.jar,flickrapi-1.2.jar,toxiclibs_p5.jar,toxiclibscore.jar,colorutils.jar,gluegen-rt.jar,jogl.jar,opengl.jar,jsminim.jar,mp3spi1.9.4.jar,tritonus_aos.jar,tritonus_share.jar,jl1.0.jar,oscP5.jar,core.jar,gstreamer-java.jar,GSVideo.jar,jna.jar
