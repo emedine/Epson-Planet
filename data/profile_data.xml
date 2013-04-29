@@ -1,122 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profileData version="1.0">
    <profile>
-	  <name>ARGENTINA</name>
-	  <Name>EPSON ARGENTINA, SRL.</Name>
-	  <blurb>Mercedes Bonini (Daughter of Epson Employee, Adriana Banar), Adriana Banar, Gerente Regional de Relaciones Públicas de Epson </blurb>
+	  <Title>EPSON ARGENTINA, SRL.</Title>
+	  <Name>Mercedes Bonini</Name>
+	  <blurb>Hija de Adriana Banar - Epson Argentina</blurb>
 	  <video >../video/EpsonVignettes1.mov</video>
 	  <latitude>-34.5875</latitude>
-	  <longitude>-58.6725</longitude>
-	  <address>Calle 4 Con Calle 11-1
-EDF. Epson - La Urbina Sur
-Caracas, ARGENTINA</address>
+	  <longitude>-66.94786</longitude>
+	  <address>Calle 4 Con Calle 11-1 EDF. Epson - La Urbina Sur Caracas, ARGENTINA</address>
   </profile>
   
   <profile>
-	  <name>BRASIL</name>
-	  <Name>EPSON BRASIL</Name>
-	  <blurb>1- Elaine Santos Silva (Wife of Danilo de Oliveira), Danilo de Oliveira
-Worker (Info to be verified), 2- Elizabeth Pedraçoli Caldatto (Mother of Eduardo Caldatto)
-Daiane Pedraçoli Caldatto, (Sister of Eduardo Caldatto), Eduardo Caldatto, Worker (Info to be verified)</blurb>
-	  <video>../video/EpsonVignettes3.mov</video>
-	  <latitude>-22.9</latitude>
-	  <longitude>-43.2333</longitude>
-	  <address>Av. Canaval Y Moreyra 590
-LIMA, 27 PERU</address>
+	  <Title>EPSON DO BRASIL</Title>
+	  <Name>Elaine Santos Silva</Name>
+	  <blurb>Esposa de Danilo de Oliveira - Epson do Brasil</blurb>
+	  <video>../video/BRAZIL_Elaine SantosSilva_Opt.mov</video>
+	  <latitude>-22.90354</latitude>
+	  <longitude>-43.20959</longitude>
+	  <address>Av. Tucunare, 720 Tambore Barueri Sao Paulo, SP 06460-020</address>
   </profile>
   
   <profile>
-	  <name>COLOMBIA</name>
-	 <Name>EPSON COLOMBIA</Name>
-	  <blurb>1- video, Catalina Salguero (Wife of Francisco Valderrama), Francisco Valderrama, Gerente General de Epson Colombia 
-</blurb>
+	  <Title>EPSON DO BRASIL</Title>
+	  <Name>Elizabeth Pedracoli Caldatto y Daiane Pedracoli Caldatto</Name>
+	  <blurb>Madre y hermana de Eduardo Caldatto - Epson Do Brasil</blurb>
+	  <video>../video/BRAZIL_PedracoliCaldatto_Opt.mov</video>
+	  <latitude>-23.49562</latitude>
+	  <longitude>-46.83581</longitude>
+	  <address>Av. Tucunare, 720 Tambore Barueri Sao Paulo, SP 06460-020</address>
+  </profile>
+  
+  
+  <profile>
+	  <Title>EPSON COLOMBIA</Title>
+	 <Name>Catalina Salguero</Name>
+	  <blurb> Esposa de Francisco Valderrama - Epson Colombia</blurb>
 	  <video>../video/EpsonVignettes2.mov</video>
 	  <latitude>4.6</latitude>
 	  <longitude>-74.0833</longitude>
-	  <address>Boulevard Manual Avila Camacho 389
-Edificio 1 Conjunto Legaria
-Col., Irrigacio, C.P. 11500
-MEXICO, D.F.</address>
+	  <address>Calle 100 No 21-64 PISO Bogota, COLOMBIA</address>
   </profile>
   
+  
+  <!-- 
   <profile>
-	  <name>CHILE</name>
+	  <Title>CHILE</Title>
 	 <Name>EPSON CHILE</Name>
 	  <blurb></blurb>
 	  <video>../video/EpsonVignettes3.mov</video>
 	  <latitude>-33.45</latitude>
 	  <longitude>-70.6667</longitude>
-	  <address>Calle 100 No 21-64 PISO
-Bogota, COLOMBIA</address>
+	  <address>Calle 100 No 21-64 PISO Bogota, COLOMBIA</address>
   </profile>
+  
+  -->
   
   <profile>
-	  <name>CENTROAMERICA</name>
-	 <Name>EPSON CENTROAMERICA</Name>
-	  <blurb>1 video, Natalia Vargas ose Pablo Rodriguez Gerente de Producto-SDIDM </blurb>
-	  <video>../video/EpsonVignettes0.mov</video>
-	  <latitude>10.05</latitude>
-	  <longitude>-84.1167</longitude>
-	  <address>La Concepcion 322, Piso 3 Providencia, Santiago CHILE</address>
+	  <Title>EPSON CENTROAMÉRICA</Title>
+	 <Name>Natalia Vargas</Name>
+	  <blurb>Esposa de Jose Pablo Rodriguez - Epson Centroamérica</blurb>
+	  <video>../video/COSTARICA_Natalia_FINAL_Opt.mov</video>
+	  <latitude>9.92713</latitude>
+	  <longitude>-84.08201</longitude>
+	  <address>Avenida Escazú Torre 1, Piso 4 San José, Costa Rica</address>
   </profile>
   
-    <profile>
-	  <name>ECUADOR</name>
-	 <Name>EPSON ECUADOR</Name>
-	  <blurb>1- Carlos Enrique Aguirre Moreno (Husband of Karinna Riofrio), Carlos Daniel Aguirre Riofrio (Son of Karinna RioFrio), Cayetano Nicolás Aguirre Riofrio (Son of Karinna RioFrio), Karinna Riofrio, Gerente de Epson Ecuador 
-2-Gustavo Xavier Jaramillo González (Son of Ana Maria Gonzalez), Ana Maria Gonzalez, Gerente de Ventas </blurb>
-	  <video>../video/EpsonVignettes0.mov</video>
-	  <latitude>-0.2167</latitude>
-	  <longitude>-78.5</longitude>
-	  <address>Av. Tucunare, 720 Tambore Barueri Sao Paulo, SP 06460-020 </address>
+   <profile>
+		  <Title>EPSON ECUADOR</Title>
+		 <Name>Carlos Enrique Aguirre Moreno con Carlos Daniel y Cayetano Nicolás Aguirre Riofrio</Name>
+		  <blurb>Familia de Karinna Riofrio - Epson Ecuador</blurb>
+		  <video>../video/ECUADOR_CarlosEnrique_Daniel_FINALOpt.mov</video>
+		  <latitude>-2.20382</latitude>
+		  <longitude>-79.89745</longitude>
+		  <address>Guyaquil</address>
   </profile>
   
-    <profile>
-	  <name>LONG BEACH</name>
-	 <Name>EPSON LONG BEACH</Name>
-	  <blurb>1- Fernando Urteaga (Son of Fernando Urteaga), Valentina Urteaga (Daughter of Fernando Urteaga), Fernando UrteagaGerente de Producto Regional de Impresoras de Gran Formato 
-	  2-Gerardina Miele (Wife of Gerardo Gordon), Gerardo Gordon, Gerente de Producto Regional de IJP
-</blurb>
-	  <video>../video/EpsonVignettes1.mov</video>
-	  <latitude>51.5002</latitude>
-	  <longitude>-0.12620544</longitude>
-	  <address>TBD</address>
-  </profile>
+   <profile>
+		  <Title>EPSON ECUADOR</Title>
+		  <Name>Gustavo Xavier Jaramillo González</Name>
+		  <blurb>Hijo de Ana Maria Gonzalez - Epson Ecuador</blurb>
+		  <video>../video/ECUADOR_Gustavo_FINAL_Opt.mov</video>
+		  <latitude>-0.2167</latitude>
+		  <longitude>-78.5</longitude>
+		  <address>Av. Tucunare, 720 Tambore Barueri Sao Paulo, SP 06460-020 </address>
+  	</profile>
+	
+	<profile>
+		  <Title>EPSON AMERICA, INC.</Title>
+		  <Name>Gerardina Miele</Name>
+		  <blurb>Esposa de Gerardo Gordon - Epson America</blurb>
+		  <video>../video/LONGBEACH_GerardinaFINAL_Opt.mov</video>
+		  <latitude>33.76832</latitude>
+		  <longitude>-117.19562</longitude>
+		  <address>3840 Kilroy Airport Way Long Beach, CA</address>
+  	</profile>
+	<profile>
+		  <Title>EPSON AMERICA, INC.</Title>
+		  <Name>Fernando y Valentina Urteaga</Name>
+		  <blurb>Hijos de Fernando Urteaga - Epson America</blurb>
+		  <video>../video/LONGBEACH_Valentina_FernandoFINAL_HalfRes_Opt.mov</video>
+		  <latitude>33.76832</latitude>
+		  <longitude>-118.19562</longitude>
+		  <address>----need  address</address>
+  	</profile>
+
   
-      <profile>
-	  <name>PERU</name>
-	 <Name>EPSON PERU</Name>
-	  <blurb> 1- Ivan Valdez (Husband of Paola Medrano) Paola Medrano Servicio  (still need to verify this info)
-2-Iris Verónica Santoyo Noguera (Wife of Paul Cesar Morales) Paul Cesar Morales Contador (still need to verify this info)
-</blurb>
-	  <video>../video/EpsonVignettes2.mov</video>
+  <profile>
+	  <Title>EPSON PERÚ</Title>
+	  <Name>Ivan Valdez</Name>
+	  <blurb>Esposo de Paola Medrano - Epson Perú</blurb>
+	  <video>../video/PERU_IvanValdezFINAL_Opt.mov</video>
 	  <latitude>-12.05</latitude>
 	  <longitude>-77.05</longitude>
-	  <address>TBD</address>
+	  <address>Av. Canaval Y Moreyra 590 LIMA, 27 PERU</address>
   </profile>
   
-      <profile>
-	  <name>MEXICO</name>
-	 <Name>EPSON MEXICO</Name>
-	  <blurb>1- Martha Galvez (Wife of Guillermo Reyna), Guillermo Reyna Gerente de Ventas al Canal 2nd Tier 
-2- Yolanda Navarro (Wife of Mauricio Cano), Mauricio Cano Diseñador Gráfico de Epson Mexico </blurb>
-	  <video>../video/EpsonVignettes3.mov</video>
-	  <latitude>19.4342</latitude>
-	  <longitude>-99.1386</longitude>
+  <profile>
+	  <Title>EPSON PERÚ</Title>
+	  <Name>Iris Verónica Santoyo Noguera</Name>
+	  <blurb>Esposa de Cesar Morales Contador - Epson Perú</blurb>
+	  <video>../video/PERU_IrisVeronicaSantoyoNogueraFINAL_Opt.mov</video>
+	  <latitude>-11.80283</latitude>
+	  <longitude>-73.71826</longitude>
 	  <address>TBD</address>
   </profile>
   
   <profile>
-	  <name>VENEZUELA</name>
-	 <Name>EPSON VENEZUELA</Name>
-	  <blurb>Martha Reimpell (Daughter of Pablo Reimpell) 
-		Arelis Sierra (Wife of Pablo Reimpell)  Pablo Reimpell 
-		Director de Operaciones 
-		</blurb>
-	  <video>../video/EpsonVignettes0.mov</video>
+	  <Title>EPSON MÉXICO</Title>
+	  <Name>Martha Galvez</Name>
+	  <blurb>Esposa de Guillermo Reyna - Epson México</blurb>
+	  <video>../video/MEXICO_Martha_FINAL_Opt.mov</video>
+	  <latitude>19.4342</latitude>
+	  <longitude>-98.1386</longitude>
+	  <address>Boulevard Manual Avila Camacho 389 Edificio 1 Conjunto Legaria Col., Irrigacio, C.P. 11500 MEXICO, D.F.</address>
+  </profile>
+  
+  <profile>
+	  <Title>EPSON MÉXICO</Title>
+	  <Name>Yolanda Navarro</Name>
+	  <blurb>Esposa de Mauricio Cano - Epson México</blurb>
+	  <video>../video/EpsonVignettes3.mov</video>
+	  <latitude>19.43261</latitude>
+	  <longitude>-99.13321</longitude>
+	  <address>TBD</address>
+  </profile>
+  
+  <profile>
+	  <Title>EPSON VENEZUELA</Title>
+	 <Name>Arelis Sierra con Martha Reimpell</Name>
+	  <blurb>Familia de Pablo Reimpell - Epson Venezuela</blurb>
+	  <video>../video/VENEZUELA_Reimpell_FINAL revised_Opt.mov</video>
 	  <latitude>10.5</latitude>
 	  <longitude>-66.9167</longitude>
-	  <address>TBD</address>
+	  <address>Calle 4 Con Calle 11-1 EDF. Epson - La Urbina Sur Caracas, VENEZUELA</address>
   </profile>
   
   

@@ -20,33 +20,30 @@ public class PopupObject {
 	GSMovie curMovie;
 
 	boolean isVideoPlaying = false;
-	boolean isVisible = false;
 	String theVideoPath = "";
 	int videoCounter = 0;
-	int vidWidth = 1024;
-	int vidHeight = 768;
-	int vidX;
-	int vidY;
+	int vidWidth = 960;
+	int vidHeight = 540;
+	int vidX = (1024 - vidWidth)/2;
+	int vidY = (768 - vidHeight)/2;
 	
 	
 	// text data
 	int curDataX = 0;
 	int curDataY = 100;
-	int curDataBoxW = 390;
+	int curDataBoxW = 380;
 	int curDataBoxH = 400;
 	// int textPosX = 400;
 	int textPosY = 100;
 	int curDataMargin = 10;
 	// 
+	String theHeader = "";
 	String theName = "";
 	String theText = "";
-//// showing data
-	String headerData = "";
-	String curData = "";
-			
+	
 	PFont HeaderFont; /// normal fonts
+	PFont NameFont;// use true/false for smooth/no-smooth for Control fonts
 	PFont BodyFont;
-	PFont pfont;// use true/false for smooth/no-smooth for Control fonts
 	
 	//// bgrounds
 	PImage bgImage;
@@ -58,9 +55,16 @@ public class PopupObject {
 		theDataProfile = theDataProfile.getInstance();
 		pApp = theDataProfile.pApp;
 		
+		HeaderFont = pApp.createFont("Neutra Display",22, true); /// normal fonts
+		NameFont = pApp.createFont("Helvetica", 18, true); // use true/false for smooth/no-smooth for Control fonts
+		BodyFont = pApp.createFont("Helvetica-Oblique", 16, true); /// normal fonts
+		
+		
+		/*
 		HeaderFont = pApp.createFont("Arial Black",18, true); /// normal fonts
-		BodyFont = pApp.createFont("Arial",14, true); /// normal fonts
-		pfont = pApp.createFont("Arial",10, true); // use true/false for smooth/no-smooth for Control fonts
+		BodyFont = pApp.createFont("Arial Italic", 14, true); /// normal fonts
+		NameFont = pApp.createFont("Arial",14, true); // use true/false for smooth/no-smooth for Control fonts
+		*/
 		
 		
 		
@@ -86,21 +90,24 @@ public class PopupObject {
 
 		pApp.image(bgImage, curDataX + bgImgW/2, curDataY + bgImgH/2);
 		
-		headerData = theName;
-	    curData = "\n" + "\n" + theText;
-
-	    
-	   
+		/* 
+	    String tBody;
+	    tBody = theName + "\n" + "\n" + theText;
+	    */
+		
 	    pApp.fill(0);
 	    // pApp.rect(curDataX, curDataY, curDataBoxW, curDataBoxH);
 	    // pApp.fill(255);
 	    pApp.textFont(HeaderFont);
-	    // pApp.text(headerData, curDataX + curDataMargin, curDataY + curDataMargin, curDataBoxW - curDataMargin, curDataBoxH);
-	    pApp.text(headerData, curDataX + curDataMargin, curDataY + textPosY +curDataMargin, curDataBoxW - curDataMargin, curDataBoxH);
+	    pApp.text(theHeader, curDataX + curDataMargin, curDataY + textPosY +curDataMargin, curDataBoxW - curDataMargin, curDataBoxH);
 	    
+	    pApp.textFont(NameFont);
+	    pApp.text(theName, curDataX + curDataMargin, curDataY + textPosY +curDataMargin * 3.5f, curDataBoxW - curDataMargin, curDataBoxH);
+	    
+	    //*
 	    pApp.textFont(BodyFont);
-	    // pApp.text(curData, curDataX + curDataMargin, curDataY + curDataMargin, curDataBoxW - curDataMargin, curDataBoxH);
-	    pApp.text(curData, curDataX + curDataMargin, curDataY + textPosY + curDataMargin, curDataBoxW - curDataMargin, curDataBoxH);
+	    pApp.text(theText, curDataX + curDataMargin, curDataY + textPosY + curDataMargin * 8, curDataBoxW - curDataMargin, curDataBoxH);
+		//*/
 	}
 	
 
@@ -131,9 +138,13 @@ public class PopupObject {
 				  
 		  }
 		
-		  // pApp.image(curMovie, curDataX + vidWidth/2 + curDataMargin, curDataY + vidHeight/2 + curDataMargin, 415, 233);
+		  // pApp.image(curMovie, curDataX + vidWidth/2 + curDataMargin, curDataY + vidHeight/2 + curDataMargin, 415, 233);;
+
 		  pApp.lights();
-		  pApp.image(curMovie, vidX + vidWidth/2 + curDataMargin, vidY + vidHeight/2 + curDataMargin, vidWidth, vidHeight);	  
+		  pApp.stroke(255);
+		  pApp.fill(0);
+		  pApp.rect(0, 0, 1024, 768);
+		  pApp.image(curMovie, vidX + vidWidth/2, vidY + vidHeight/2, vidWidth, vidHeight);	  
 	  
 	} 
 	

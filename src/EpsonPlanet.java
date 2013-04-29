@@ -70,14 +70,9 @@ public class EpsonPlanet extends PApplet {
 	///*
 	public static void main(String[] args) {
 		PApplet.main(new String[] { "--present", "EpsonPlanet" });
-		// PApplet.main(new String[] {"EpsonPlanet" });
+
 	}
 	
-	//*/
-	/*
-	int screenWidth = 1440;
-	int screenHeight = 900;
-	// */
 	
 	
 	int screenWidth = 1024;
@@ -104,6 +99,9 @@ public class EpsonPlanet extends PApplet {
 	private final Vec3D desRot = new Vec3D();
 	// is moving
 	private boolean isMoving = false;
+	
+	/// is keyboard enabled
+	private boolean useKeyboard = false;
 	//Zoom factors
 	private float currZoom = 1;
 	private float targetZoom = 1;
@@ -120,7 +118,7 @@ public class EpsonPlanet extends PApplet {
 	//// PROFILE DATA
 	int numProfiles;
 	int curID;
-	ArrayList<String> videoPathList =  new ArrayList();
+	ArrayList<String> headerList =  new ArrayList();
 	ArrayList<String> nameList =  new ArrayList();
 	ArrayList<String> blurbList =  new ArrayList();
 	ArrayList<String> latList =  new ArrayList();
@@ -158,9 +156,8 @@ public class EpsonPlanet extends PApplet {
 
 	// / PApplet stuff
 	PApplet pApp;
-	// / init marker array
-	// GPSMarker[] theMarker;
-	
+
+
 	/// OSC objects
 	OscP5 oscP5;
 	String oscMess;
@@ -175,7 +172,7 @@ public class EpsonPlanet extends PApplet {
 	// destroyer
 	Destroyer theDestroyer;
 	boolean doAudio = false;
-	// destroyer lata and long
+	// destroyer lat and long
 	float theLat= 500;
 	float theLong = 500;
 
@@ -191,6 +188,7 @@ public class EpsonPlanet extends PApplet {
 	
 	
 	///////// CHROMELESS CONFIGURATION
+	
 	public void init() {
         if(frame!=null){
           frame.removeNotify();//make the frame not displayable
@@ -317,9 +315,10 @@ public class EpsonPlanet extends PApplet {
 			XMLElement profile = xmlFeed.getChild(i);
 			///* 
 			try{
+				headerList.add(profile.getChild(0).getContent());
 				nameList.add(profile.getChild(1).getContent());
 				blurbList.add(profile.getChild(2).getContent());
-				videoPathList.add(profile.getChild(3).getContent());
+				// videoPathList.add(profile.getChild(3).getContent());
 				thePopUp.videoPath.add(profile.getChild(3).getContent());
 				latList.add(profile.getChild(4).getContent());
 				longList.add(profile.getChild(5).getContent());
@@ -401,23 +400,14 @@ public class EpsonPlanet extends PApplet {
 	////set destroyer
 		public void initDestroyer() {
 			
-			/// set up markers
-			for (int i = 0; i < GPSArray.size(); i++) {
-				// / add a new GPS marker, set its lat and long arrays
-				// / and compute its position
-				// theMarker[i] = new GPSMarker(longArray[i], latArray[i]);
-				// theMarker[i].computePosOnSphere(EARTH_RADIUS);
-
-			}
-			
 			//// init the destroyer
 			//// placeholder lat and long
 			float lt = new Float(4.6);
 			float lo = new Float(-74.0833);
 			
 			try {
-			theDestroyer = new Destroyer(lo, lt);
-			theDestroyer.computePosOnSphere(EARTH_RADIUS);
+				theDestroyer = new Destroyer(lo, lt);
+				theDestroyer.computePosOnSphere(EARTH_RADIUS);
 			
 			} catch(Exception e){
 				println(e);
@@ -570,7 +560,7 @@ public class EpsonPlanet extends PApplet {
 			// theLong = map(mouseX, 200, 800, -180, 180);
 		
 		}
-		if (!mousePressed) {
+		if (!mousePressed && useKeyboard == true) {
 			
 			///*
 			desRot.interpolateToSelf(new Vec3D(mouseX * 0.51f, mouseY * 0.51f, 0),0.25f / currZoom);
@@ -611,7 +601,7 @@ public class EpsonPlanet extends PApplet {
 			
 			//// CHECK INTERSECTION of MARKER AND DESTROYER
 			GPSMarker tMark = GPSArray.get(i);
-			if(theDestroyer.pos.y <= (tMark.pos.y + 10) && theDestroyer.pos.y >= (tMark.pos.y -10) && theDestroyer.pos.x <= (tMark.pos.x + 10) && theDestroyer.pos.x >= (tMark.pos.x -10) ){
+			if(isPopupVisible == false && theDestroyer.pos.y <= (tMark.pos.y + 10) && theDestroyer.pos.y >= (tMark.pos.y -10) && theDestroyer.pos.x <= (tMark.pos.x + 10) && theDestroyer.pos.x >= (tMark.pos.x -10) ){
 				
 				
 				tMark.doHit();
@@ -620,6 +610,7 @@ public class EpsonPlanet extends PApplet {
 				thePopUp.theName = "";
 				thePopUp.theText = "";
 				
+				thePopUp.theHeader = headerList.get(tMark.theID);
 				thePopUp.theName = nameList.get(tMark.theID);
 				thePopUp.theText = blurbList.get(tMark.theID);
 				// thePopUp.theVideoPath = videoPathList.get(tMark.theID);
@@ -627,7 +618,7 @@ public class EpsonPlanet extends PApplet {
 			    
 				/// swtich video if it's different than the current
 				if(curID != tMark.theID){
-					println("Cur ID: " + curID + " new ID: " + tMark.theID);
+					// println("Cur ID: " + curID + " new ID: " + tMark.theID);
 					/// stop current, switch
 					thePopUp.stopVideo();
 					thePopUp.switchCurVideo(tMark.theID);
@@ -795,10 +786,16 @@ public class EpsonPlanet extends PApplet {
 		if (key == 'l') {
 			showLabels = !showLabels;
 		}
-		if(key == 'm'){
-			println("init Midi");
+		if(key == 'k'){
+			if(useKeyboard == false){
+				useKeyboard = true;
+			} else {
+				useKeyboard = false;
+				
+			}
 			
 		}
+		/// switches video
 		if(key == 't'){
 
 			thePopUp.videoCounter ++;
